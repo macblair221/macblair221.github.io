@@ -100,6 +100,41 @@
   border: none;
   display: block;
 }
+
+ .project-highlights {
+  margin: 1rem 0 1.25rem;
+  padding-left: 1.1rem;
+  color: #b0ada6;
+}
+
+.project-highlights li {
+  margin-bottom: 0.65rem;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+ .project-highlights {
+  margin: 1rem 0 1.25rem;
+  padding-left: 1.1rem;
+  color: #b0ada6;
+}
+
+.project-highlights li {
+  margin-bottom: 0.65rem;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.project-metrics {
+  padding: 0 3rem 2.5rem;
+}
+
+.project-caption {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 10px;
+  font-family: var(--mono);
+}
 </style>
 </head>
 <body>
@@ -171,35 +206,39 @@
         <p>
           Built a 6 degree-of-freedom follower robot arm from hardware assembly through deployment of a trained imitation learning policy. The final system autonomously picks up a block and places it into a bowl.
         </p>
-        
+    
         <ul class="project-highlights">
           <li>Wrote a custom PS4 teleoperation script for collecting demonstrations</li>
           <li>Recorded 50+ episodes and trained an ACT policy on the collected trajectories</li>
           <li>Deployed the trained policy back onto the physical robot and validated it on real hardware</li>
         </ul>
-        
+    
         <p>
           This project gave me hands-on experience debugging a full robotics stack across hardware, webcam input, controller mapping, data collection, and model training on Ubuntu.
         </p>
       </div>
     </div>
-      <div>
-        <div class="wandb-container">
-          <div class="wandb-label">
-            <span>ACT policy · training performance</span>
-            <a href="https://wandb.ai/macblair221-uc-san-diego/so101-block-pickup/reports/Lerobot-so-101-follower-training--VmlldzoxNjQzMTUzNQ" target="_blank">open in wandb ↗</a>
-          </div>
-          <iframe
-            class="wandb-frame"
-            src="https://wandb.ai/macblair221-uc-san-diego/so101-block-pickup/reports/Lerobot-so-101-follower-training--VmlldzoxNjQzMTUzNQ"
-            title="WandB Training Report"
-            allowfullscreen
-          ></iframe>
+    
+    <div class="project-metrics">
+      <div class="wandb-container">
+        <div class="wandb-label">
+          <span>ACT policy · training performance</span>
+          <a href="https://wandb.ai/macblair221-uc-san-diego/so101-block-pickup/reports/Lerobot-so-101-follower-training--VmlldzoxNjQzMTUzNQ" target="_blank">
+            open in wandb ↗
+          </a>
         </div>
-        <p style="font-size: 0.82rem; color: var(--muted); margin-top: 10px; font-family: var(--mono);">
-          Training performance for the ACT policy, trained on recorded teleoperation episodes. Loss decreased from 0.35 → 0.06.
-        </p>
+        <iframe
+          class="wandb-frame"
+          src="https://wandb.ai/macblair221-uc-san-diego/so101-block-pickup/reports/Lerobot-so-101-follower-training--VmlldzoxNjQzMTUzNQ"
+          title="WandB Training Report"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
       </div>
+    
+      <p class="project-caption">
+        Training performance for the ACT policy, trained on recorded teleoperation episodes. Loss decreased from 0.35 → 0.06.
+      </p>
     </div>
 
     <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
