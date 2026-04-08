@@ -135,6 +135,95 @@
   margin-top: 10px;
   font-family: var(--mono);
 }
+
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.mini-project-card {
+  border: 0.5px solid var(--border2);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.mini-project-header {
+  padding: 2rem 2rem 1.25rem;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.mini-project-header h3 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+
+.mini-project-header p {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+.mini-project-body {
+  padding: 1.5rem 2rem 1.75rem;
+}
+
+.mini-project-body p {
+  color: #b0ada6;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.mini-project-highlights {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mini-project-highlights li {
+  font-size: 0.9rem;
+  color: #b0ada6;
+  padding: 0.85rem 1rem;
+  background: var(--surface2);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  line-height: 1.6;
+}
+
+.mini-project-footer {
+  padding: 1.25rem 2rem 2rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.metric {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+@media (max-width: 768px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-project-header,
+  .mini-project-body,
+  .mini-project-footer {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
 </style>
 </head>
 <body>
@@ -245,6 +334,79 @@
       <a href="https://huggingface.co/macblair221" target="_blank" class="btn btn-ghost">datasets on hugging face</a>
     </div>
   </div>
+ <div class="section-label" style="margin-top: 3rem;">selected projects</div>
+
+<div class="project-grid">
+
+  <div class="mini-project-card">
+    <div class="mini-project-header">
+      <h3>Power Outage Severity Analysis</h3>
+      <p>logistic regression · fairness audit · hypothesis testing · data science</p>
+      <div class="tag-row">
+        <span class="tag tag-lime">classification</span>
+        <span class="tag tag-green">fairness</span>
+        <span class="tag tag-gray">EDA</span>
+        <span class="tag tag-gray">statistics</span>
+      </div>
+    </div>
+
+    <div class="mini-project-body">
+      <p>
+        Built a logistic regression model to predict whether a power outage would last more than 48 hours using cause, climate, and customer-related features from about 1,535 outage events.
+      </p>
+
+      <ul class="mini-project-highlights">
+        <li>
+          <span class="metric">model performance</span><br>
+          Final model achieved <strong>0.83 AUC</strong> using log transforms and interaction features.
+        </li>
+        <li>
+          <span class="metric">responsible evaluation</span><br>
+          Performed permutation testing, MAR analysis, and a fairness audit that found a recall gap between Western and Eastern regions.
+        </li>
+      </ul>
+    </div>
+
+    <div class="mini-project-footer">
+      <a href="https://macblair221.github.io/power-outage-analysis/" target="_blank" class="btn btn-ghost">live project page</a>
+    </div>
+  </div>
+
+  <div class="mini-project-card">
+    <div class="mini-project-header">
+      <h3>Baby Schema Cuteness Prediction</h3>
+      <p>computer vision · resnet18 embeddings · ridge regression · psychology</p>
+      <div class="tag-row">
+        <span class="tag tag-lime">computer vision</span>
+        <span class="tag tag-green">research-inspired</span>
+        <span class="tag tag-gray">regression</span>
+        <span class="tag tag-gray">python</span>
+      </div>
+    </div>
+
+    <div class="mini-project-body">
+      <p>
+        Explored whether infant facial features associated with “baby schema” could predict perceived cuteness using ResNet18 image embeddings and Ridge regression on a small image dataset.
+      </p>
+
+      <ul class="mini-project-highlights">
+        <li>
+          <span class="metric">result</span><br>
+          Achieved a <strong>12% reduction in MAE</strong> over baseline using 5-fold cross-validation.
+        </li>
+        <li>
+          <span class="metric">why it’s interesting</span><br>
+          Connected computer vision features to psychological research on how humans perceive infant faces.
+        </li>
+      </ul>
+    </div>
+
+    <div class="mini-project-footer">
+      <a href="#" class="btn btn-ghost">project writeup coming soon</a>
+    </div>
+  </div>
+
+</div>
 </section>
 
 <section id="about">
