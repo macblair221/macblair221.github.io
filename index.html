@@ -340,52 +340,55 @@
   </div>
  
   <div class="project-card">
-    <div class="project-header">
-      <div class="project-title-block">
-        <h3>Low-Cost EEG Signal Acquisition System (In progress)</h3>
-        <p>analog circuit · biosignal processing · arduino · tinkercad</p>
-        <div class="tag-row">
-          <span class="tag tag-lime">biosignals</span>
-          <span class="tag tag-green">neuroscience</span>
-          <span class="tag tag-gray">signal processing</span>
-          <span class="tag tag-gray">hardware</span>
-        </div>
+  <div class="project-header">
+    <div class="project-title-block">
+      <h3>Low-Cost EEG Signal Acquisition System (In progress)</h3>
+      <p>analog front-end · biosignal processing · arduino · LTspice · tinkercad</p>
+      <div class="tag-row">
+        <span class="tag tag-lime">biosignals</span>
+        <span class="tag tag-green">neuroscience</span>
+        <span class="tag tag-gray">signal processing</span>
+        <span class="tag tag-gray">hardware</span>
       </div>
-    </div>
-    
-    <div class="project-body">
-      <div>
-        <div style="background: var(--surface2); border: 0.5px solid var(--border); border-radius: 6px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;">
-          <p style="color: var(--muted); font-family: var(--mono); font-size: 13px; text-align: center; padding: 2rem;">
-            In progress
-          </p>
-        </div>
-      </div>
-   
-      <div>
-        <p>
-          Building a complete low-cost pipeline for EEG signal acquisition from an analog circuit 
-          design to eventual neural data collection and analysis using data science techniques.
-        </p>
-   
-        <ul class="project-highlights">
-          <li>Designed and simulated full analog front-end in Tinkercad (amplification + 1.6–150 Hz bandpass filter + 2.5V biasing for Arduino)</li>
-          <li>Completed detailed hand-drawn schematics and sourced all components</li>
-          <li>Tested basic Arduino Nano Every firmware and breadboard circuits</li>
-          <li>Future work: physical testing with electrodes + Python analysis (FFT, filtering, feature extraction)</li>
-        </ul>
-
-        <a href="https://www.tinkercad.com/things/drkNY5txiWW-analogfrontendbias2p5v?sharecode=Wq90BGDogfv_VSaJfGjwyyGnjnBxpdsJaPxCJER71j8" 
-           target="_blank" class="btn btn-ghost" style="margin-top: 1rem; display: inline-block;">
-          View Tinkercad Simulation
-        </a>
-      </div>
-    </div>
-
-    <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
-      <a href="https://github.com/macblair221/eeg-signal-acquisition" target="_blank" class="btn btn-ghost">View GitHub Repo →</a>
     </div>
   </div>
+  
+  <div class="project-body">
+    <div>
+      <div style="background: var(--surface2); border: 0.5px solid var(--border); border-radius: 6px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;">
+        <p style="color: var(--muted); font-family: var(--mono); font-size: 13px; text-align: center; padding: 2rem;">
+          In progress
+        </p>
+      </div>
+    </div>
+ 
+    <div>
+      <p>
+        Building a low-cost EEG signal acquisition pipeline that connects analog circuit design,
+        Arduino-based data capture, and Python-based signal processing for exploratory neural
+        data analysis.
+      </p>
+ 
+      <ul class="project-highlights">
+        <li>Designed an initial analog front-end prototype in Tinkercad to model amplification, filtering, and Arduino-compatible 2.5V signal biasing</li>
+        <li>Reproducing key filter stages in LTspice to analyze cutoff frequency, gain, phase shift, and transient waveform behavior</li>
+        <li>Completed hand-drawn schematics and sourced components for breadboard-level hardware testing</li>
+        <li>Tested basic Arduino Nano Every firmware and simple breadboard circuits as preparation for signal acquisition</li>
+        <li>Planned analysis pipeline includes Python-based visualization, FFT analysis, digital filtering, and feature extraction</li>
+      </ul>
+
+      <a href="https://www.tinkercad.com/things/drkNY5txiWW-analogfrontendbias2p5v?sharecode=Wq90BGDogfv_VSaJfGjwyyGnjnBxpdsJaPxCJER71j8" 
+         target="_blank" class="btn btn-ghost" style="margin-top: 1rem; display: inline-block;">
+        View Early Tinkercad Prototype
+      </a>
+    </div>
+  </div>
+
+  <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
+    <a href="https://github.com/macblair221/eeg-signal-acquisition" target="_blank" class="btn btn-ghost">View GitHub Repo →</a>
+  </div>
+</div>
+
  <div class="section-label" style="margin-top: 3rem;">selected projects</div>
 
 <div class="project-grid">
