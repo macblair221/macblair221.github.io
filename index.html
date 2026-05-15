@@ -224,6 +224,83 @@
     padding-right: 1.5rem;
   }
 }
+
+/* Click-to-enlarge project images */
+.project-image-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: zoom-in;
+  text-align: left;
+}
+
+.project-image-button:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.project-image {
+  width: 100%;
+  border-radius: 6px;
+  border: 0.5px solid var(--border);
+  background: var(--surface2);
+  display: block;
+}
+
+.project-image-caption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-align: center;
+}
+
+.image-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.86);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: zoom-out;
+}
+
+.image-modal.open {
+  display: flex;
+}
+
+.image-modal-img {
+  max-width: 95vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.image-modal-close {
+  position: fixed;
+  top: 1rem;
+  right: 1.25rem;
+  z-index: 10000;
+  font-size: 2rem;
+  line-height: 1;
+  color: white;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.image-modal-close:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
 </style>
 </head>
 <body>
@@ -355,11 +432,19 @@
   
   <div class="project-body">
     <div>
-      <img 
-        src="images/LTspice_OpAmp_BandPass.jpg" 
-        alt="LTspice schematic of EEG analog front-end with filtering, op-amp gain stages, and Arduino biasing"
-        style="width: 100%; border-radius: 6px; border: 0.5px solid var(--border); background: var(--surface2);"
+      <button
+        class="project-image-button"
+        type="button"
+        onclick="openImageModal('images/LTspice_OpAmp_BandPass.jpg', 'LTspice schematic of EEG analog front-end with filtering, op-amp gain stages, and Arduino biasing')"
+        aria-label="Open enlarged LTspice schematic"
       >
+        <img 
+          src="images/LTspice_OpAmp_BandPass.jpg" 
+          alt="LTspice schematic of EEG analog front-end with filtering, op-amp gain stages, and Arduino biasing"
+          class="project-image"
+        >
+      </button>
+      <p class="project-image-caption">Click schematic to enlarge</p>
     </div>
  
     <div>
@@ -533,6 +618,50 @@
 <footer>
   <p>McAllister blair · ucsd data science · macblair221@gmail.com</p>
 </footer>
+
+<div id="image-modal" class="image-modal" onclick="closeImageModal()" aria-hidden="true" role="dialog" aria-modal="true">
+  <button class="image-modal-close" type="button" onclick="closeImageModal(event)" aria-label="Close enlarged image">
+    ×
+  </button>
+  <img id="modal-image" src="" alt="" class="image-modal-img" onclick="event.stopPropagation()">
+</div>
+
+<script>
+  function openImageModal(src, alt) {
+    const modal = document.getElementById("image-modal");
+    const image = document.getElementById("modal-image");
+
+    image.src = src;
+    image.alt = alt;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+
+    const closeButton = modal.querySelector(".image-modal-close");
+    if (closeButton) closeButton.focus();
+  }
+
+  function closeImageModal(event) {
+    if (event) event.stopPropagation();
+
+    const modal = document.getElementById("image-modal");
+    const image = document.getElementById("modal-image");
+
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    image.src = "";
+    image.alt = "";
+  }
+
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+      closeImageModal();
+    }
+  });
+</script>
+
+</body>
+</html>
+
 
 </body>
 </html>
