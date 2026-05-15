@@ -355,25 +355,24 @@
   
   <div class="project-body">
     <div>
-      <div style="background: var(--surface2); border: 0.5px solid var(--border); border-radius: 6px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;">
-        <p style="color: var(--muted); font-family: var(--mono); font-size: 13px; text-align: center; padding: 2rem;">
-          In progress
-        </p>
-      </div>
+      <img 
+        src="images/LTspice_OpAmp_BandPass.jpg" 
+        alt="LTspice schematic of EEG analog front-end with filtering, op-amp gain stages, and Arduino biasing"
+        style="width: 100%; border-radius: 6px; border: 0.5px solid var(--border); background: var(--surface2);"
+      >
     </div>
  
     <div>
       <p>
-        Building a low-cost EEG signal acquisition pipeline that connects analog circuit design,
-        Arduino-based data capture, and Python-based signal processing for exploratory neural
-        data analysis.
+        Building a low-cost EEG signal acquisition pipeline that connects analog front-end design,
+        Arduino-based data capture, and Python signal processing for exploratory neural data analysis.
       </p>
  
       <ul class="project-highlights">
-        <li>Designed an initial analog front-end prototype in Tinkercad to model amplification, filtering, and Arduino-compatible 2.5V signal biasing</li>
-        <li>Reproducing key filter stages in LTspice to analyze cutoff frequency, gain, phase shift, and transient waveform behavior</li>
-        <li>Completed hand-drawn schematics and sourced components for breadboard-level hardware testing</li>
-        <li>Tested basic Arduino Nano Every firmware and simple breadboard circuits as preparation for signal acquisition</li>
+        <li>Designed and simulated an EEG-style analog front-end in LTspice with RC filtering, two op-amp gain stages, and Arduino-compatible 2.5V biasing</li>
+        <li>Validated circuit behavior using AC analysis for frequency response and transient analysis for sine-wave signal testing</li>
+        <li>Modeled a signal chain with high-pass drift reduction, low-pass noise attenuation, approximately 121x simulated gain, and AC coupling into an Arduino ADC node</li>
+        <li>Created an early Tinkercad prototype to plan amplification, filtering, and Arduino integration before moving to LTspice</li>
         <li>Planned analysis pipeline includes Python-based visualization, FFT analysis, digital filtering, and feature extraction</li>
       </ul>
     </div>
