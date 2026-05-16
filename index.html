@@ -435,16 +435,16 @@
       <button
         class="project-image-button"
         type="button"
-        onclick="openImageModal('images/eeg_frontend_noise_drift_schematic_output.jpg', 'LTspice schematic of EEG analog front-end with filtering, op-amp gain stages, and Arduino biasing')"
+        onclick="openImageModal('images/eeg_frontend_noise_drift_schematic_output.jpg', 'LTspice transient simulation of noisy EEG-like signal at Arduino input')"
         aria-label="click to enlarge."
       >
         <img 
-          src="images/LTspice_OpAmp_BandPass.jpg" 
-          alt="LTspice schematic of EEG analog front-end with filtering, op-amp gain stages, and Arduino biasing"
+          src="images/eeg_frontend_noise_drift_schematic_output.jpg" 
+          alt="LTspice transient simulation of noisy EEG-like signal at Arduino input"
           class="project-image"
         >
       </button>
-      <p class="project-image-caption">Click schematic to enlarge</p>
+      <p class="project-image-caption">Click to enlarge</p>
     </div>
  
     <div>
@@ -454,12 +454,12 @@
       </p>
  
       <ul class="project-highlights">
-        <li>Designed and simulated an EEG-style analog front-end in LTspice with RC filtering, two op-amp gain stages, and Arduino-compatible 2.5V biasing</li>
-        <li>Validated circuit behavior using AC analysis for frequency response and transient analysis for sine-wave signal testing</li>
-        <li>Modeled a signal chain with high-pass drift reduction, low-pass noise attenuation, approximately 121x simulated gain, and AC coupling into an Arduino ADC node</li>
-        <li>Created an early Tinkercad prototype to plan amplification, filtering, and Arduino integration before moving to LTspice</li>
-        <li>Planned analysis pipeline includes Python-based visualization, FFT analysis, digital filtering, and feature extraction</li>
-      </ul>
+       <li>Designed and simulated an EEG-style analog front-end in LTspice with RC filtering, two op-amp gain stages, AC coupling, and Arduino-compatible 2.5V biasing</li>
+       <li>Validated the circuit with AC analysis for frequency response and transient analysis for time-domain waveform behavior</li>
+       <li>Replaced the ideal op-amp model with LTspice’s ADTL084 model and verified predictable gain across 1mV, 100µV, 50µV, and 10µV test inputs</li>
+       <li>Simulated noisy EEG-like inputs by combining a 10 Hz signal with 60 Hz noise and low-frequency baseline drift</li>
+       <li>Created an early Tinkercad prototype to plan amplification, filtering, and Arduino integration before moving to more rigorous LTspice simulations</li>
+     </ul>
     </div>
   </div>
 
