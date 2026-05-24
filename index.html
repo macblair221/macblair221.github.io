@@ -435,12 +435,12 @@
       <button
         class="project-image-button"
         type="button"
-        onclick="openImageModal('images/eeg_full_frontend_input_protection.jpg', 'Frontend Schematic')"
-        aria-label="click to enlarge."
+        onclick="openImageModal('images/eeg_full_frontend_input_protection.jpg', 'EEG analog front-end LTspice schematic')"
+        aria-label="Click to enlarge EEG analog front-end schematic"
       >
         <img 
           src="images/eeg_full_frontend_input_protection.jpg" 
-          alt="Frontend Schematic prototype"
+          alt="LTspice schematic of EEG analog front-end with AD620A input stage, protection diodes, filtering, op-amp gain stages, and Arduino biasing"
           class="project-image"
         >
       </button>
@@ -448,18 +448,20 @@
     </div>
  
     <div>
-     <p>
-       Building a low-cost EEG signal acquisition pipeline that connects analog front-end design,
-       Arduino-based data capture, and Python signal processing for exploratory neural data analysis.
-     </p>
+      <p>
+        Building a low-cost EEG signal acquisition pipeline from simulated analog front-end design
+        toward a physical breadboard circuit, Arduino-based data capture, and Python signal processing
+        for exploratory neural data analysis.
+      </p>
    
-     <ul class="project-highlights">
-       <li>Designed and simulated a full EEG-style analog front-end in LTspice with an AD620A instrumentation amplifier, RC filtering, ADTL084 op-amp gain stages, AC coupling, and Arduino-compatible 2.5V biasing</li>
-       <li>Added input protection using series current-limiting resistors and 5.1V zener clamps, then verified that the clamps remain inactive during normal EEG-like signals and activate during large input stress tests</li>
-       <li>Validated circuit behavior with AC analysis for frequency response and transient analysis for time-domain waveform behavior</li>
-       <li>Tested low-amplitude differential inputs, including clean sine waves and EEG-like signals with 10 Hz content, 60 Hz noise, and low-frequency baseline drift</li>
-       <li>Created an early Tinkercad prototype to plan amplification, filtering, and Arduino integration before moving to more rigorous LTspice simulations</li>
-     </ul>
+      <ul class="project-highlights">
+        <li>Designed and simulated a full EEG-style analog front-end in LTspice with an AD620A instrumentation amplifier, input protection, RC filtering, ADTL084 op-amp gain stages, AC coupling, and Arduino-compatible 2.5V biasing</li>
+        <li>Added series current-limiting resistors and 5.1V zener clamps, then verified that the protection stage remains inactive during normal EEG-like signals and activates during large input stress tests</li>
+        <li>Validated circuit behavior with AC analysis for frequency response and transient analysis for time-domain waveform behavior</li>
+        <li>Tested low-amplitude differential inputs, including clean sine waves and EEG-like signals with 10 Hz content, 60 Hz noise, and low-frequency baseline drift</li>
+        <li>Preparing the simulated design for physical breadboard testing with known safe input signals before electrode-based experiments</li>
+      </ul>
+    </div>
   </div>
 
   <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
@@ -472,6 +474,7 @@
     </a>
   </div>
 </div>
+
 
  <div class="section-label" style="margin-top: 3rem;">selected projects</div>
 
