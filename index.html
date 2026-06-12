@@ -337,6 +337,56 @@
 
 <section id="projects">
   <h2>Things I've built</h2>
+   <div class="project-card">
+      <div class="project-header">
+        <div class="project-title-block">
+          <h3>Parkinson’s Neurological State Classifier</h3>
+          <p>mne-bids · random forest · phase-amplitude coupling · signal processing</p>
+          <div class="tag-row">
+            <span class="tag tag-lime">machine learning</span>
+            <span class="tag tag-green">eeg biomarkers</span>
+            <span class="tag tag-gray">python</span>
+            <span class="tag tag-gray">scikit-learn</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="project-body">
+        <div>
+          <button
+            class="project-image-button"
+            type="button"
+            onclick="openImageModal('images/parkinsons_PAC_plot.png', 'Phase-Amplitude Coupling (PAC) distribution shift')"
+            aria-label="Click to enlarge PAC histogram"
+          >
+            <img 
+              src="images/pac_histogram.png" 
+              alt="Histogram showing the decoupling of Beta-Gamma interactions upon Levodopa administration"
+              class="project-image"
+            >
+          </button>
+          <p class="project-image-caption">PAC distribution shift (ON vs. OFF medication)</p>
+        </div>
+        
+        <div>
+          <p>
+            Engineered an automated data orchestration pipeline to classify Parkinson's medication states using non-linear resting-state EEG biomarkers.
+          </p>
+          
+          <ul class="project-highlights">
+            <li>Ingested, cleaned, and epoched raw clinical BDF datasets from the OpenNeuro database using MNE-BIDS to ensure reproducible, scalable execution.</li>
+            <li>Extracted localized spectral power, inter-hemispheric Phase-Locking Values (PLV), and Phase-Amplitude Coupling (PAC) via Hilbert transforms.</li>
+            <li>Trained a Scikit-Learn Random Forest classifier utilizing a within-subject design to control for anatomical baseline variance, achieving a 0.68 ROC-AUC.</li>
+          </ul>
+        </div>
+      </div>
+  
+      <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="https://github.com/macblair221/parkinsons-eeg-classifier" target="_blank" class="btn btn-primary">
+          view code on github →
+        </a>
+      </div>
+    </div>
 
   <div class="project-card">
     <div class="project-header">
