@@ -469,11 +469,11 @@
   <div class="project-card">
   <div class="project-header">
     <div class="project-title-block">
-      <h3>Low-Cost EEG Signal Acquisition System (In progress)</h3>
-      <p>analog front-end · biosignal processing · arduino · LTspice · tinkercad</p>
+      <h3>Low-Cost Biosignal Acquisition System</h3>
+      <p>analog hardware · arduino · python · mne-python · scipy</p>
       <div class="tag-row">
         <span class="tag tag-lime">biosignals</span>
-        <span class="tag tag-green">neuroscience</span>
+        <span class="tag tag-green">data pipeline</span>
         <span class="tag tag-gray">signal processing</span>
         <span class="tag tag-gray">hardware</span>
       </div>
@@ -485,12 +485,12 @@
       <button
         class="project-image-button"
         type="button"
-        onclick="openImageModal('images/eeg_full_frontend_input_protection.jpg', 'EEG analog front-end LTspice schematic')"
-        aria-label="Click to enlarge EEG analog front-end schematic"
+        onclick="openImageModal('images/ecg_peak_detection_results.jpg', 'Python peak detection algorithm running on live biometric data')"
+        aria-label="Click to enlarge signal processing results"
       >
         <img 
-          src="images/eeg_full_frontend_input_protection.jpg" 
-          alt="LTspice schematic of EEG analog front-end with AD620A input stage, protection diodes, filtering, op-amp gain stages, and Arduino biasing"
+          src="images/ecg_peak_detection_results.jpg" 
+          alt="Automated peak detection algorithm successfully calculating Beats Per Minute from a filtered human biosignal"
           class="project-image"
         >
       </button>
@@ -499,20 +499,25 @@
  
     <div>
       <p>
-        Building a low-cost EEG signal acquisition pipeline from simulated analog front-end design
-        toward a physical breadboard circuit, Arduino-based data capture, and Python signal processing
-        for exploratory neural data analysis.
+        Built a complete, end-to-end hardware and software pipeline to capture, digitally filter, and analyze live human biometrics using off-the-shelf components and Python.
       </p>
-   
+    
       <ul class="project-highlights">
-        <li>Designed and simulated a full EEG-style analog front-end in LTspice with an AD620A instrumentation amplifier, input protection, RC filtering, ADTL084 op-amp gain stages, AC coupling, and Arduino-compatible 2.5V biasing</li>
-        <li>Added series current-limiting resistors and 5.1V zener clamps, then verified that the protection stage remains inactive during normal EEG-like signals and activates during large input stress tests</li>
-        <li>Validated circuit behavior with AC analysis for frequency response and transient analysis for time-domain waveform behavior</li>
-        <li>Tested low-amplitude differential inputs, including clean sine waves and EEG-like signals with 10 Hz content, 60 Hz noise, and low-frequency baseline drift</li>
-        <li>Preparing the simulated design for physical breadboard testing with known safe input signals before electrode-based experiments</li>
+        <li><strong>Analog Hardware:</strong> Designed and built a physical amplifier circuit on a breadboard to extract microscopic biological signals while filtering out ambient electrical noise.</li>
+        <li><strong>Digital Telemetry:</strong> Engineered a safe hardware bridge to an Arduino, capturing real-time physiological data at a 200Hz sampling rate.</li>
+        <li><strong>Data Pipeline:</strong> Developed a custom Python script using PySerial to ingest the live hardware data stream directly into a standard data science environment.</li>
+        <li><strong>Signal Processing:</strong> Applied clinical-grade digital bandpass filters (MNE-Python) to remove baseline wander and residual interference from the raw data.</li>
+        <li><strong>Algorithmic Validation:</strong> Wrote an automated peak-detection algorithm (SciPy) with a strict voltage floor to accurately isolate heartbeats and calculate a live resting heart rate.</li>
       </ul>
     </div>
   </div>
+
+  <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
+    <a href="https://github.com/macblair221/eeg-signal-acquisition" target="_blank" class="btn btn-ghost">
+      View GitHub Repo →
+    </a>
+  </div>
+</div>
 
   <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
     <a href="https://github.com/macblair221/eeg-signal-acquisition" target="_blank" class="btn btn-ghost">
