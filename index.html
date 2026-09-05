@@ -253,7 +253,6 @@
           <li>Deployed and iterated a full end-to-end behavioral cloning pipeline (DonkeyCar) — driving data collection, model training, and autonomous laps on real hardware</li>
           <li>Ran training workflows on UCSD's DSMLP GPU cluster and deployed trained models to a Raspberry Pi 5 onboard the vehicle</li>
           <li>Debugged the full hardware/software stack: camera input, actuation, calibration, and the train-deploy loop between the cluster and the car</li>
-          <li>Final project (in development): a two-robot dynamic mapping and localization system — one robot maps the environment, the other detects and flags changes against the stale map</li>
         </ul>
 
         <p>
@@ -338,7 +337,7 @@
     <div class="project-header">
       <div class="project-title-block">
         <h3>Parkinson's Neurological State Classifier</h3>
-        <p>MNE-BIDS · random forest · phase-amplitude coupling · signal processing</p>
+        <p>MNE-BIDS · random forest · permutation testing · signal processing</p>
         <div class="tag-row">
           <span class="tag tag-lime">machine learning</span>
           <span class="tag tag-green">eeg biomarkers</span>
@@ -350,30 +349,15 @@
 
     <div class="project-body">
       <div>
-        <button
-          class="project-image-button"
-          type="button"
-          onclick="openImageModal('images/parkinsons_PAC_plot.png', 'Phase-Amplitude Coupling (PAC) distribution shift')"
-          aria-label="Click to enlarge PAC histogram"
-        >
-          <img
-            src="images/parkinsons_PAC_plot.png"
-            alt="Histogram showing the decoupling of Beta-Gamma interactions upon Levodopa administration"
-            class="project-image"
-          >
-        </button>
-        <p class="project-image-caption">PAC distribution shift (ON vs. OFF medication)</p>
-      </div>
-
-      <div>
         <p>
-          Engineered an automated data orchestration pipeline to classify Parkinson's medication states using non-linear resting-state EEG biomarkers.
+           A cross-subject EEG decoder for Parkinson's medication state — and an investigation into why its first result was wrong. The original pipeline reported 0.796 ROC-AUC from a random train/test split that leaked subject identity. Rebuilt with leave-one-subject-out evaluation and confound-resistant features, it holds at 0.578 across held-out patients, validated against a permutation null
         </p>
 
         <ul class="project-highlights">
-          <li>Ingested, cleaned, and epoched raw clinical BDF datasets from the OpenNeuro database using MNE-BIDS to ensure reproducible, scalable execution.</li>
-          <li>Extracted localized spectral power, inter-hemispheric Phase-Locking Values (PLV), and Phase-Amplitude Coupling (PAC) via Hilbert transforms.</li>
-          <li>Trained a Scikit-Learn Random Forest classifier utilizing a within-subject design to control for anatomical baseline variance, achieving a 0.68 ROC-AUC.</li>
+          <li>Ingested, filtered, and epoched raw clinical BDF datasets from OpenNeuro using MNE-BIDS, extracting 48 features across 7 sensorimotor channels.</li>
+          <li>Replaced absolute band power with relative power and normalized the PAC modulation index, closing two routes by which per-session recording gain — confounded with the ON/OFF label — leaked into the classifier.</li>
+          <li>Found that the two highest-scoring subjects were the only two flagged in the dataset metadata for a preprocessing mismatch between sessions; excluding them improved 8 of the remaining 13.</li>
+          <li>Validated against a 100-permutation shuffled-label null (0.500 ± 0.012, p = 0.0099).</li>
         </ul>
       </div>
     </div>
