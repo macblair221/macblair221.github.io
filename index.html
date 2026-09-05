@@ -349,6 +349,16 @@
 
     <div class="project-body">
       <div>
+        <table class="project-results">
+          <tr><th>Evaluation</th><th>ROC-AUC</th></tr>
+          <tr><td>Pooled random split <em>(leaks)</em></td><td>0.796</td></tr>
+          <tr><td>Leave-one-subject-out, 15 subjects</td><td>0.583</td></tr>
+          <tr><td>Leave-one-subject-out, 13 subjects</td><td><strong>0.578</strong></td></tr>
+          <tr><td>Shuffled-label null (100 perms)</td><td>0.500</td></tr>
+        </table>
+        <p class="project-image-caption">Same features, same model — only the split differs.</p>
+      </div>
+      <div>
         <p>
            A cross-subject EEG decoder for Parkinson's medication state — and an investigation into why its first result was wrong. The original pipeline reported 0.796 ROC-AUC from a random train/test split that leaked subject identity. Rebuilt with leave-one-subject-out evaluation and confound-resistant features, it holds at 0.578 across held-out patients, validated against a permutation null
         </p>
