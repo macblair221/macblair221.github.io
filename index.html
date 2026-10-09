@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>McAllister Blair | Autonomy and Robotics</title>
+<meta name="description" content="McAllister Blair, UC San Diego data science student working on autonomy, robotics, and perception for physical systems.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>
+  try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <div class="wrap">
+    <a href="#top" class="mark"><span class="full">McAllister Blair</span><span class="short">MB</span></a>
+    <ul>
+      <li class="hide-sm"><a href="#experience">Experience</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Switch color theme">Dark</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <h1>McAllister Blair</h1>
+    <p class="role">Autonomy, robotics, and perception</p>
+    <div class="summary">
+      <p>I'm a data science student at UC San Diego on the ML &amp; AI track, graduating in June 2027. I build software for machines that operate in the physical world: driving policies that run on real vehicles, robot manipulation learned from demonstration, and safety-critical ROS 2 code in C++.</p>
+      <p>At ArcellAI I own the robotics layer of an autonomous-lab proposal to the DOE Genesis Mission. I'm seeking internship and full-time roles in autonomy, robotics, and defense.</p>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="resume.html">View resume</a>
+      <a class="btn" href="https://github.com/macblair221" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://linkedin.com/in/macblair" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="mailto:macblair221@gmail.com">Email</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head"><h2>Experience</h2></div>
+
+    <div class="role-block">
+      <div class="org">ArcellAI<small>AI Engineering Intern<br>June 2026 to present</small></div>
+      <div>
+        <h3>Autonomous lab robotics, DOE Genesis Mission proposal</h3>
+        <p class="dates">Sep 2026 to present</p>
+        <ul>
+          <li>Own the robotics layer of an instrument-neutral autonomous-lab proposal: a simulated skill that moves a sample carrier from a rack into a characterization station and verifies placement before a measurement runs.</li>
+          <li>Specifying the workcell (coordinate frames, planning scene, collision-aware motion in ROS 2 with MoveIt Task Constructor) and tracing successful and failed transfers against a fault catalog.</li>
+          <li>Evaluating learned 6D pose estimation (FoundationPose) against a fiducial-marker baseline for visual placement checks.</li>
+        </ul>
+        <h3>Biosignal data quality</h3>
+        <p class="dates">June 2026 to Sep 2026</p>
+        <ul>
+          <li>Built an ingestion, cleaning, and validation pipeline (Python, Pydantic, MNE) that normalizes inconsistent clinical recordings into one validated schema with hash-based provenance.</li>
+          <li>Designed a configurable quality engine that checks for shape mismatches, missing or duplicate channels, and corrupt records, and reports each issue with a severity level and supporting evidence.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="role-block">
+      <div class="org">Triton AI<small>UC San Diego autonomous racing team<br>Aug 2026 to present</small></div>
+      <div>
+        <h3>Jeep Bot platform team</h3>
+        <ul>
+          <li>Working on obstacle avoidance for an autonomous campus vehicle (ROS 2, LiDAR and stereo camera): local planning and costmaps, Nav2 integration, and a safety layer.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Selected work</h2>
+      <div class="filters" role="group" aria-label="Filter projects by topic">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="autonomy" aria-pressed="false">Autonomy</button>
+        <button type="button" data-filter="robotics" aria-pressed="false">Robotics</button>
+        <button type="button" data-filter="ml" aria-pressed="false">Machine learning</button>
+        <button type="button" data-filter="biosignals" aria-pressed="false">Biosignals</button>
+      </div>
+    </div>
+
+    <article class="project" data-topics="autonomy ml">
+      <figure class="figure">
+        <div class="frame">
+          <div class="video-tall">
+            <iframe src="https://www.youtube.com/embed/-TeuYBSztGQ" title="1:10-scale vehicle driving autonomously" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <figcaption>The vehicle driving on a CNN policy trained from my own driving data.</figcaption>
+      </figure>
+      <div class="text">
+        <p class="meta">July 2026, DSC 190 at UC San Diego</p>
+        <h3>Autonomous vehicle perception and control</h3>
+        <p class="stack">Behavior cloning, CNN, TensorFlow Lite, Raspberry Pi 5, UCSD DSMLP GPU cluster</p>
+        <ul>
+          <li>Built a camera-based imitation-learning stack for a 1:10-scale vehicle, training a CNN to map onboard camera frames to steering and throttle.</li>
+          <li>Deployed the model with TensorFlow Lite for on-device inference on a Raspberry Pi 5 running a 20 Hz control loop.</li>
+          <li>Improved validation loss 3.4× across training iterations.</li>
+        </ul>
+        <div class="links"><a href="https://github.com/macblair221" target="_blank" rel="noopener">GitHub</a></div>
+      </div>
+    </article>
+
+    <article class="project" data-topics="autonomy robotics">
+      <figure class="figure">
+        <div class="frame">
+          <table class="spec">
+            <tbody>
+              <tr><th scope="row">Inputs</th><td>2D LiDAR (LaserScan), odometry</td></tr>
+              <tr><th scope="row">Output</th><td>Drive-command override on the F1Tenth interface</td></tr>
+              <tr><th scope="row">Rate</th><td>Every incoming scan</td></tr>
+              <tr><th scope="row">Stack</th><td>C++, ROS 2 Jazzy, colcon</td></tr>
+              <tr><th scope="row">Test cases</th><td>On-axis, off-axis, stationary vehicle</td></tr>
+              <tr><th scope="row">Ground truth</th><td>Derived independently of the node's own formulation</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption>Node specification.</figcaption>
+      </figure>
+      <div class="text">
+        <p class="meta">August 2026, personal project</p>
+        <h3>Automatic emergency braking node</h3>
+        <p class="stack">C++, ROS 2 Jazzy, LiDAR, odometry</p>
+        <p>A safety node that computes time to collision for every LiDAR beam and overrides drive commands to stop the vehicle before impact. Braking latches once triggered, which keeps the behavior predictable without sensor fusion or filtering.</p>
+        <ul>
+          <li>Validated against a synthetic LaserScan and odometry fixture with independently derived ground truth.</li>
+          <li>Confirmed the computed time to collision matches the fixture, the brake fires on the first sample under threshold, and a stationary vehicle never brakes.</li>
+        </ul>
+        <div class="links"><a href="https://github.com/macblair221" target="_blank" rel="noopener">GitHub</a></div>
+      </div>
+    </article>
+
+    <article class="project" data-topics="robotics ml">
+      <figure class="figure">
+        <div class="frame">
+          <div class="video-tall">
+            <iframe src="https://www.youtube.com/embed/LyoHkJCaGtY" title="Robot arm placing a block into a bowl" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <figcaption>The trained policy completing pick-and-place on the physical arm.</figcaption>
+      </figure>
+      <div class="text">
+        <p class="meta">February to April 2026, personal project</p>
+        <h3>Robotic arm manipulation with imitation learning</h3>
+        <p class="stack">LeRobot SO-101, ACT policy, PyTorch, Hugging Face, Weights &amp; Biases</p>
+        <ul>
+          <li>Built a 6-DoF follower arm from hardware assembly through deployment, with a custom PS4 teleoperation interface for collecting demonstrations.</li>
+          <li>Trained an Action Chunking Transformer on 50+ demonstrations, reducing training loss from 0.35 to 0.06.</li>
+          <li>Deployed the policy on the arm and validated autonomous pick-and-place on hardware.</li>
+        </ul>
+        <div class="links">
+          <a href="https://github.com/macblair221" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://huggingface.co/macblair221" target="_blank" rel="noopener">Model and dataset</a>
+        </div>
+        <details class="report">
+          <summary>Training report</summary>
+          <iframe data-src="https://wandb.ai/macblair221-uc-san-diego/so101-block-pickup/reports/Lerobot-so-101-follower-training--VmlldzoxNjQzMTUzNQ" title="Weights and Biases training report"></iframe>
+        </details>
+      </div>
+    </article>
+
+    <article class="project" data-topics="biosignals ml">
+      <figure class="figure">
+        <div class="frame">
+          <table class="spec">
+            <thead><tr><th scope="col">Evaluation</th><th scope="col" class="num">ROC-AUC</th></tr></thead>
+            <tbody>
+              <tr><td>Random split (leaks subject identity)</td><td class="num">0.796</td></tr>
+              <tr><td>Leave one subject out, 15 subjects</td><td class="num">0.583</td></tr>
+              <tr class="key"><td>Leave one subject out, 13 subjects</td><td class="num">0.578</td></tr>
+              <tr><td>Shuffled labels, 100 permutations</td><td class="num">0.500</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption>Same features and model. Only the evaluation split changes.</figcaption>
+      </figure>
+      <div class="text">
+        <p class="meta">2026, personal project</p>
+        <h3>Parkinson's medication-state classifier</h3>
+        <p class="stack">EEG, MNE-BIDS, scikit-learn, permutation testing</p>
+        <p>Classifies whether a Parkinson's patient is on or off levodopa from resting EEG. The first pipeline reported 0.796 ROC-AUC, but its random split leaked patient identity. Rebuilt with leave-one-subject-out evaluation, it holds at 0.578 on unseen patients and beats a permutation null (p = 0.0099).</p>
+        <ul>
+          <li>Extracted 48 features across 7 sensorimotor channels from raw OpenNeuro clinical recordings.</li>
+          <li>Removed two paths by which recording gain leaked into the label, using relative band power and a normalized coupling index.</li>
+          <li>Traced the two best-scoring subjects to a preprocessing mismatch flagged in the dataset's own metadata.</li>
+        </ul>
+        <div class="links"><a href="https://github.com/macblair221/parkinsons-eeg-classifier" target="_blank" rel="noopener">GitHub</a></div>
+      </div>
+    </article>
+
+    <article class="project" data-topics="biosignals">
+      <figure class="figure">
+        <div class="frame">
+          <button class="zoom" type="button" data-full="images/ecg_peak_detection_results.png" aria-label="Enlarge the peak detection plot">
+            <img src="images/ecg_peak_detection_results.png" alt="Filtered ECG signal with detected heartbeats marked" loading="lazy">
+          </button>
+          <button class="zoom" type="button" data-full="images/real_circuit_build.jpg" aria-label="Enlarge the circuit photo">
+            <img src="images/real_circuit_build.jpg" alt="Breadboard circuit built around an AD620 instrumentation amplifier" loading="lazy">
+          </button>
+        </div>
+        <figcaption>R-peak detection on a live recording, and the AD620 front-end. Select either to enlarge.</figcaption>
+      </figure>
+      <div class="text">
+        <p class="meta">April 2026 to present, personal project</p>
+        <h3>Biosignal acquisition circuit</h3>
+        <p class="stack">AD620 instrumentation amplifier, Arduino Nano Every, PySerial, MNE, SciPy</p>
+        <ul>
+          <li>Designed and built an analog front-end with discrete active filtering to capture ECG from surface electrodes.</li>
+          <li>Built a real-time acquisition pipeline sampling at about 190 Hz, with band-pass filtering to remove baseline wander and mains noise.</li>
+          <li>Wrote R-peak detection to compute heart rate from the filtered signal. Designed with EEG acquisition as the end goal.</li>
+        </ul>
+        <div class="links"><a href="https://github.com/macblair221/eeg-signal-acquisition" target="_blank" rel="noopener">GitHub</a></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="skills" class="skills">
+  <div class="wrap">
+    <div class="section-head"><h2>Technical skills</h2></div>
+    <table class="spec">
+      <tbody>
+        <tr><th scope="row">Languages</th><td>C++, Python, SQL, Bash</td></tr>
+        <tr><th scope="row">Robotics and embedded</th><td>ROS 2 (Jazzy), MoveIt, workcell design (coordinate frames, planning scenes), LiDAR and odometry processing, real-time control loops, edge deployment (TensorFlow Lite, Raspberry Pi 5, Arduino), analog circuit prototyping (LTspice), Linux, Git</td></tr>
+        <tr><th scope="row">Machine learning</th><td>PyTorch, TensorFlow/Keras, scikit-learn, imitation learning (behavior cloning, ACT), computer vision, 6D pose estimation, model evaluation, GPU cluster training</td></tr>
+        <tr><th scope="row">Data and signals</th><td>NumPy, pandas, SciPy, MNE, time-series analysis, feature engineering, data validation, PostgreSQL</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="section-head"><h2>Contact</h2></div>
+    <p>I'm looking for internship and full-time roles in autonomy, robotics, and defense technology. The best way to reach me is email.</p>
+    <div class="actions">
+      <a class="btn primary" href="mailto:macblair221@gmail.com">macblair221@gmail.com</a>
+      <a class="btn" href="https://linkedin.com/in/macblair" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/macblair221" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://huggingface.co/macblair221" target="_blank" rel="noopener">Hugging Face</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap"><span>McAllister P. Blair</span><span>San Diego, CA</span></div>
+</footer>
+
+<div class="image-modal" id="image-modal" role="dialog" aria-modal="true" aria-label="Enlarged image" hidden>
+  <button type="button" aria-label="Close">×</button>
+  <img alt="">
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

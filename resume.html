@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Resume | McAllister Blair</title>
+<meta name="description" content="Resume of McAllister P. Blair, UC San Diego data science student in autonomy and robotics.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>
+  try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <div class="wrap">
+    <a href="index.html" class="mark"><span class="full">McAllister Blair</span><span class="short">MB</span></a>
+    <ul>
+      <li class="hide-sm"><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="resume.html" aria-current="page">Resume</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Switch color theme">Dark</button>
+  </div>
+</nav>
+
+<main class="resume">
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>McAllister P. Blair</h1>
+        <p class="contact-line">
+          <a href="mailto:macblair221@gmail.com">macblair221@gmail.com</a>, San Diego, CA,
+          <a href="https://linkedin.com/in/macblair" target="_blank" rel="noopener">linkedin.com/in/macblair</a>,
+          <a href="https://github.com/macblair221" target="_blank" rel="noopener">github.com/macblair221</a>
+        </p>
+      </div>
+      <div class="actions no-print" style="margin-top: 0;">
+        <a class="btn primary" href="resume.pdf" download>Download PDF</a>
+        <button class="btn" type="button" onclick="window.print()" style="background: none; cursor: pointer;">Print</button>
+      </div>
+    </header>
+
+    <h2>Summary</h2>
+    <p>Data science student at UC San Diego (ML &amp; AI track) working on autonomy and robotics for physical systems. Trained a CNN on onboard camera frames for real-time vehicle control, built validation tooling for heterogeneous clinical recordings, and is developing a simulated robotic sample-handling skill for an autonomous-lab proposal to the DOE Genesis Mission.</p>
+
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="entry-head"><h3>University of California, San Diego</h3><span class="dates">Expected June 2027</span></div>
+      <p class="sub">B.S. in Data Science, ML &amp; AI Track. Major GPA 3.83, cumulative GPA 3.4. La Jolla, CA.</p>
+      <p>Coursework: Autonomous Vehicles, Machine Learning, Artificial Intelligence, Data Structures and Algorithms, Linear Algebra, Multivariable Calculus, Statistics, Database Management Systems.</p>
+    </div>
+
+    <h2>Experience</h2>
+    <div class="entry">
+      <div class="entry-head"><h3>ArcellAI, AI Engineering Intern</h3><span class="dates">June 2026 to present</span></div>
+      <p class="sub">Autonomous lab robotics, DOE Genesis Mission proposal (Sep 2026 to present)</p>
+      <ul>
+        <li>Own the robotics layer of ArcellAI's instrument-neutral autonomous-lab proposal: a simulated skill that transfers a sample carrier from a rack into a characterization station and verifies correct placement before a measurement runs.</li>
+        <li>Specifying the workcell (coordinate frames, planning scene, collision-aware motion with ROS 2 and MoveIt Task Constructor) and tracing successful and failed transfer episodes against a 24-case fault catalog.</li>
+        <li>Evaluating learned 6D pose estimation (FoundationPose) against a fiducial-marker baseline for visual placement verification.</li>
+      </ul>
+      <p class="sub" style="margin-top: 0.75rem;">Biosignal data quality (June 2026 to Sep 2026)</p>
+      <ul>
+        <li>Built an end-to-end ingestion, cleaning, and validation pipeline (Python, Pydantic, MNE) for heterogeneous clinical time-series recordings, normalizing inconsistent sources into one validated schema with hash-based provenance.</li>
+        <li>Designed a configurable quality engine running automated integrity checks (shape mismatch, missing and duplicate channels, corrupt records) that emits typed, severity-tiered quality events with supporting evidence.</li>
+      </ul>
+    </div>
+
+    <h2>Projects</h2>
+    <div class="entry">
+      <div class="entry-head"><h3>Autonomous Vehicle Perception and Control, DSC 190</h3><span class="dates">July 2026</span></div>
+      <ul>
+        <li>Designed and deployed a camera-based imitation-learning (behavior cloning) autonomy stack for a 1:10-scale vehicle, training a CNN to map onboard camera frames to steering and throttle.</li>
+        <li>Deployed trained models with TensorFlow Lite for real-time inference on a Raspberry Pi 5 running a 20 Hz control loop, improving validation loss 3.4× across iterations.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><h3>Robotic Arm Manipulation with Imitation Learning</h3><span class="dates">Feb 2026 to Apr 2026</span></div>
+      <ul>
+        <li>Built a 6-DoF follower arm from hardware assembly through deployment, with a custom PS4 controller teleoperation interface for collecting demonstrations.</li>
+        <li>Trained an Action Chunking Transformer policy on 50+ demonstrations (PyTorch, Hugging Face, W&amp;B), cutting training loss from 0.35 to 0.06, and validated autonomous pick-and-place on hardware.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><h3>Automatic Emergency Braking Safety Node</h3><span class="dates">August 2026</span></div>
+      <ul>
+        <li>Built a ROS 2 (Jazzy) safety node in C++ that computes per-beam time to collision from 2D LiDAR and odometry and overrides drive commands on the F1Tenth interface at sensor rate.</li>
+        <li>Validated against a synthetic LaserScan and odometry fixture covering on-axis, off-axis, and stationary cases, with ground truth derived independently of the node's formulation.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><h3>Biosignal Acquisition Circuit and ECG Signal Processing</h3><span class="dates">Apr 2026 to present</span></div>
+      <ul>
+        <li>Designed and built a custom analog front-end (AD620 instrumentation amplifier, discrete active filtering) to capture ECG from surface electrodes.</li>
+        <li>Built a real-time acquisition pipeline (Arduino Nano Every to PySerial) sampling at about 190 Hz, with MNE band-pass filtering to remove baseline wander and mains noise.</li>
+      </ul>
+    </div>
+
+    <h2>Technical skills</h2>
+    <table class="spec">
+      <tbody>
+        <tr><th scope="row">Languages</th><td>C++, Python, SQL, Bash</td></tr>
+        <tr><th scope="row">Robotics and embedded</th><td>ROS 2 (Jazzy), workcell design (coordinate frames, planning scenes), LiDAR and odometry processing, real-time control loops, edge deployment (TensorFlow Lite, Raspberry Pi 5, Arduino), analog circuit prototyping (LTspice), Linux, Git</td></tr>
+        <tr><th scope="row">Machine learning</th><td>PyTorch, TensorFlow/Keras, scikit-learn, imitation learning (behavior cloning, ACT), computer vision, 6D pose estimation, model evaluation, GPU cluster training</td></tr>
+        <tr><th scope="row">Data and signals</th><td>NumPy, pandas, SciPy, MNE, time-series analysis, feature engineering, data cleaning and validation, PostgreSQL</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Activities</h2>
+    <div class="entry">
+      <div class="entry-head"><h3>Triton AI, UC San Diego autonomous racing team</h3><span class="dates">August 2026 to present</span></div>
+      <ul>
+        <li>Jeep Bot platform team (ROS 2, LiDAR and stereo camera sensing) for autonomous campus navigation, working on obstacle avoidance: local planning, costmaps, Nav2 integration, and a safety layer.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap"><span>McAllister P. Blair</span><a href="index.html">Back to home</a></div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
