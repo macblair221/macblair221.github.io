@@ -4,501 +4,546 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>McAllister Blair</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Mono:wght@400;500&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<meta name="description" content="McAllister Blair, UC San Diego data science student building robots, biosignal hardware, and the ML that connects them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<script>
+  // Apply a saved theme before first paint so the page doesn't flash.
+  try {
+    var saved = localStorage.getItem("theme");
+    if (saved === "light" || saved === "dark") document.documentElement.dataset.theme = saved;
+  } catch (e) {}
+</script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ---------- Tokens ---------- */
   :root {
-    --bg: #0e0e0d; --surface: #161614; --surface2: #1e1e1b;
-    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
-    --text: #f0ede6; --muted: #888680; --accent: #a3a089; --accent2: #5dcaa5;
-    --serif: 'DM Serif Display', Georgia, serif;
-    --sans: 'Instrument Sans', sans-serif;
-    --mono: 'DM Mono', monospace;
+    --paper: #fdfbfa;
+    --panel: #ffffff;
+    --ink: #1b2230;
+    --muted: #5d6574;
+    --rule: #e6dfdd;
+    --link: #2349b5;
+    --grid-minor: rgba(214, 72, 66, 0.09);
+    --grid-major: rgba(214, 72, 66, 0.22);
+    --trace: #1b2230;
+
+    --display: "Bricolage Grotesque", system-ui, sans-serif;
+    --body: "Source Serif 4", Georgia, serif;
+
+    --measure: 66ch;
+    --wide: 1120px;
+    --gutter: clamp(1rem, 4vw, 3rem);
+    color-scheme: light;
   }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #12151b; --panel: #181c24; --ink: #e8eaee; --muted: #9aa3b2;
+      --rule: #2a303b; --link: #93b1ff;
+      --grid-minor: rgba(255, 120, 110, 0.06); --grid-major: rgba(255, 120, 110, 0.14);
+      --trace: #f2d5d2; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #12151b; --panel: #181c24; --ink: #e8eaee; --muted: #9aa3b2;
+    --rule: #2a303b; --link: #93b1ff;
+    --grid-minor: rgba(255, 120, 110, 0.06); --grid-major: rgba(255, 120, 110, 0.14);
+    --trace: #f2d5d2; color-scheme: dark;
+  }
+
+  /* ---------- Base ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.65; min-height: 100vh; }
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; background: rgba(14,14,13,0.85); backdrop-filter: blur(12px); border-bottom: 0.5px solid var(--border); }
-  .nav-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: 0.05em; text-decoration: none; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
-  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 3rem 4rem; max-width: 1100px; margin: 0 auto; position: relative; }
-  .hero-label { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; }
-  .hero-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
-  h1 { font-family: var(--serif); font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 2rem; color: var(--text); }
-  h1 em { font-style: italic; color: var(--accent); }
-  .hero-bio { font-size: 1.1rem; color: var(--muted); max-width: 560px; line-height: 1.75; margin-bottom: 2.5rem; }
-  .hero-bio strong { color: var(--text); font-weight: 500; }
-  .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.6rem 1.25rem; border-radius: 4px; font-size: 13px; font-family: var(--mono); letter-spacing: 0.04em; text-decoration: none; transition: all 0.2s; cursor: pointer; }
-  .btn-primary { background: var(--accent); color: #0e0e0d; font-weight: 500; border: none; }
-  .btn-primary:hover { background: #d4f577; }
-  .btn-ghost { background: transparent; color: var(--muted); border: 0.5px solid var(--border2); }
-  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
-  .scroll-indicator { position: absolute; bottom: 3rem; left: 3rem; display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
-  .scroll-line { width: 40px; height: 0.5px; background: var(--muted); animation: scrollPulse 2s ease-in-out infinite; }
-  @keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleX(0.6); transform-origin: left; } 50% { opacity: 1; transform: scaleX(1); } }
-  section { max-width: 1100px; margin: 0 auto; padding: 6rem 3rem; }
-  .section-label { font-family: var(--mono); font-size: 11px; color: var(--accent2); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
-  .section-label::before { content: ''; display: block; width: 16px; height: 1px; background: var(--accent2); }
-  h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; line-height: 1.1; margin-bottom: 3rem; color: var(--text); }
-  .project-card { border: 0.5px solid var(--border2); border-radius: 8px; overflow: hidden; background: var(--surface); margin-bottom: 2rem; }
-  .project-header { padding: 2.5rem 3rem; border-bottom: 0.5px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-  .project-title-block h3 { font-family: var(--serif); font-size: 1.9rem; font-weight: 400; margin-bottom: 0.4rem; color: var(--text); }
-  .project-title-block p { font-size: 13px; color: var(--muted); font-family: var(--mono); }
-  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
-  .tag { font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 3px; letter-spacing: 0.04em; }
-  .tag-green { background: rgba(93,202,165,0.12); color: var(--accent2); border: 0.5px solid rgba(93,202,165,0.25); }
-  .tag-lime { background: rgba(200,240,101,0.1); color: var(--accent); border: 0.5px solid rgba(200,240,101,0.2); }
-  .tag-gray { background: var(--surface2); color: var(--muted); border: 0.5px solid var(--border); }
-  .tag-amber { background: rgba(240, 180, 80, 0.12); color: #e0ab55; border: 0.5px solid rgba(240,180,80,0.28); }
-  .project-body { padding: 2.5rem 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-  .project-body p { color: #b0ada6; font-size: 0.95rem; line-height: 1.8; }
-  .project-body p + p { margin-top: 1rem; }
-  .video-placeholder { background: var(--surface2); border: 0.5px solid var(--border); border-radius: 6px; aspect-ratio: 16/9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; margin-bottom: 2rem; }
-  .video-placeholder .play-icon { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); color: var(--muted); }
-  .video-placeholder p { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.04em; text-align: center; padding: 0 1.5rem; }
-  .wandb-container { border: 0.5px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--surface2); }
-  .wandb-label { font-family: var(--mono); font-size: 11px; color: var(--accent2); letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 16px; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .wandb-label a { color: var(--muted); font-size: 11px; text-decoration: none; }
-  .wandb-label a:hover { color: var(--text); }
-  .wandb-frame { width: 100%; height: 420px; border: none; display: block; }
-  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start; }
-  .about-text p { color: #b0ada6; font-size: 1rem; line-height: 1.85; margin-bottom: 1.25rem; }
-  .about-text p strong { color: var(--text); font-weight: 500; }
-  .interests-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .interests-list li { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: #b0ada6; padding: 12px 16px; background: var(--surface); border: 0.5px solid var(--border); border-radius: 6px; }
-  .interest-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .dot-green { background: var(--accent2); }
-  .dot-lime { background: var(--accent); }
-  .contact-strip { background: var(--surface); border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); padding: 4rem 3rem; }
-  .contact-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-  .contact-text h2 { margin-bottom: 0.5rem; font-size: 2.4rem; }
-  .contact-text p { color: var(--muted); font-size: 0.95rem; }
-  .contact-links { display: flex; gap: 1rem; flex-wrap: wrap; }
-  footer { padding: 2rem 3rem; max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-  footer p { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
-    .project-body, .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .project-header, .project-footer { padding: 1.5rem; }
-    .project-body { padding: 1.5rem; }
-    .contact-strip { padding: 3rem 1.5rem; }
-    footer { padding: 2rem 1.5rem; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1.0625rem/1.7 var(--body);
+    -webkit-font-smoothing: antialiased;
   }
-  .so101-video { width: 100%; max-width: 350px; aspect-ratio: 9 / 16; border-radius: 12px; overflow: hidden; }
-  .so101-video iframe { width: 100%; height: 100%; border: none; display: block; }
-  .project-highlights { margin: 1rem 0 1.25rem; padding-left: 1.1rem; color: #b0ada6; }
-  .project-highlights li { margin-bottom: 0.65rem; line-height: 1.7; font-size: 0.95rem; }
-  .project-metrics { padding: 0 3rem 2.5rem; }
-  .project-caption { font-size: 0.82rem; color: var(--muted); margin-top: 10px; font-family: var(--mono); }
-  .project-image-button { display: block; width: 100%; padding: 0; border: none; background: transparent; cursor: zoom-in; text-align: left; }
-  .project-image-button:focus-visible { outline: 2px solid var(--accent2); outline-offset: 4px; border-radius: 8px; }
-  .project-image { width: 100%; border-radius: 6px; border: 0.5px solid var(--border); background: var(--surface2); display: block; }
-  .project-image-caption { margin-top: 0.5rem; color: var(--muted); font-family: var(--mono); font-size: 12px; text-align: center; }
-  .image-modal { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.86); align-items: center; justify-content: center; padding: 2rem; cursor: zoom-out; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.05; margin: 0; text-wrap: balance; }
+  p { margin: 0 0 1em; }
+  a { color: var(--link); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 2px; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  .wrap { max-width: var(--wide); margin-inline: auto; padding-inline: var(--gutter); }
+
+  /* ECG paper: 1 mm minor squares, 5 mm major squares */
+  .grid-paper {
+    background-color: var(--panel);
+    background-image:
+      linear-gradient(var(--grid-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(var(--grid-minor) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+  }
+
+  /* ---------- Nav ---------- */
+  .site-nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .site-nav .wrap { display: flex; align-items: center; gap: 1.5rem; min-height: 3.5rem; }
+  .site-nav .name { font: 600 1rem var(--display); color: var(--ink); text-decoration: none; margin-right: auto; white-space: nowrap; }
+  .site-nav .name .short { display: none; }
+  .site-nav ul { display: flex; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+  .site-nav ul a { font: 400 0.95rem var(--display); color: var(--muted); text-decoration: none; }
+  .site-nav ul a:hover, .site-nav ul a[aria-current="true"] { color: var(--ink); }
+  .theme-toggle {
+    font: 400 0.85rem var(--display); color: var(--muted);
+    background: none; border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0.25rem 0.75rem; cursor: pointer;
+  }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--muted); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding-block: clamp(3rem, 9vw, 6.5rem) 0; }
+  .hero h1 {
+    font-size: clamp(3.2rem, 10.5vw, 8.5rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+    font-variation-settings: "opsz" 96;
+  }
+  .hero .lede { max-width: 38rem; font-size: clamp(1.1rem, 1.6vw, 1.3rem); margin-top: 1.75rem; }
+  .hero .links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-family: var(--display); margin-top: 0.5rem; }
+
+  .trace-strip { margin-top: clamp(2.5rem, 6vw, 4rem); border-block: 1px solid var(--rule); }
+  .trace-strip svg { display: block; width: 100%; height: clamp(90px, 14vw, 150px); }
+  .trace-strip path {
+    fill: none; stroke: var(--trace); stroke-width: 1.6; stroke-linejoin: round;
+    stroke-dasharray: 1; stroke-dashoffset: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .trace-strip path { stroke-dashoffset: 1; animation: draw 3.2s cubic-bezier(.4,0,.2,1) 0.3s forwards; }
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  /* ---------- Sections ---------- */
+  section { padding-block: clamp(3.5rem, 8vw, 6rem); }
+  section + section { border-top: 1px solid var(--rule); }
+  .section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: 2.5rem; }
+  h2 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; letter-spacing: -0.02em; }
+
+  /* Now */
+  .now-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 2rem; margin: 0; padding: 0; list-style: none; }
+  .now-list h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .now-list p { color: var(--muted); margin: 0; }
+
+  /* Filters */
+  .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .filters button {
+    font: 400 0.95rem var(--display); color: var(--muted);
+    background: none; border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0.35rem 0.9rem; cursor: pointer;
+  }
+  .filters button:hover { color: var(--ink); border-color: var(--muted); }
+  .filters button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+  /* Projects */
+  .project {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-areas: "figure text";
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    padding-block: 3rem;
+    border-top: 1px solid var(--rule);
+  }
+  .project:first-of-type { border-top: 0; padding-top: 0; }
+  .project[hidden] { display: none; }
+  .project .figure { grid-area: figure; }
+  .project .text { grid-area: text; }
+  .project h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 600; letter-spacing: -0.015em; margin-bottom: 0.5rem; }
+  .project .stack { font-family: var(--display); color: var(--muted); font-size: 0.95rem; margin-bottom: 1.25rem; }
+  .project .when { font-family: var(--display); font-size: 0.9rem; color: var(--muted); margin-bottom: 0.75rem; }
+  .project ul { padding-left: 1.1rem; margin: 0 0 1.25rem; }
+  .project li { margin-bottom: 0.45rem; }
+  .project .more { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-family: var(--display); }
+
+  .figure-frame { border: 1px solid var(--rule); padding: clamp(0.75rem, 2vw, 1.25rem); }
+  figcaption { font-family: var(--display); font-size: 0.85rem; color: var(--muted); margin-top: 0.6rem; line-height: 1.45; }
+
+  .video-tall { aspect-ratio: 9 / 16; max-width: 320px; margin-inline: auto; }
+  .video-tall iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .zoom { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+  .zoom + .zoom { margin-top: 1rem; }
+
+  .results { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: var(--panel); }
+  .results th, .results td { padding: 0.6rem 0.75rem; text-align: left; border-bottom: 1px solid var(--rule); }
+  .results th { font: 600 0.85rem var(--display); color: var(--muted); }
+  .results td:last-child, .results th:last-child { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .results tr.key td { font-weight: 600; }
+
+  details.report { margin-top: 1.25rem; border: 1px solid var(--rule); }
+  details.report summary { font-family: var(--display); cursor: pointer; padding: 0.75rem 1rem; }
+  details.report iframe { width: 100%; height: 520px; border: 0; display: block; }
+
+  /* Smaller builds */
+  .small-builds { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--rule); }
+  .small-builds h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; }
+  .small-builds dl { display: grid; grid-template-columns: minmax(10rem, 16rem) 1fr; gap: 0.9rem 2rem; margin: 0; }
+  .small-builds dt { font-family: var(--display); font-weight: 600; }
+  .small-builds dd { margin: 0; color: var(--muted); }
+
+  /* About */
+  .about { display: grid; grid-template-columns: minmax(0, var(--measure)) minmax(14rem, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .about .interests { font-family: var(--display); list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .about .interests li { padding: 0.7rem 0; border-bottom: 1px solid var(--rule); }
+
+  /* Contact */
+  .contact p { max-width: 40rem; font-size: 1.15rem; }
+  .contact .links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; font: 600 1.15rem var(--display); }
+
+  footer { border-top: 1px solid var(--rule); padding-block: 2rem; color: var(--muted); font-family: var(--display); font-size: 0.9rem; }
+
+  /* Image viewer */
+  .image-modal { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(10, 12, 16, 0.88); align-items: center; justify-content: center; padding: 2rem; cursor: zoom-out; }
   .image-modal.open { display: flex; }
-  .image-modal-img { max-width: 95vw; max-height: 90vh; border-radius: 8px; background: white; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45); }
-  .image-modal-close { position: fixed; top: 1rem; right: 1.25rem; z-index: 10000; font-size: 2rem; line-height: 1; color: white; background: transparent; border: none; cursor: pointer; }
-  .image-modal-close:focus-visible { outline: 2px solid var(--accent2); outline-offset: 4px; border-radius: 4px; }
-  .project-results { width: 100%; border-collapse: collapse; font-size: 0.85rem; color: #b0ada6; }
-  .project-results th, .project-results td { padding: 0.5rem 0.4rem; text-align: left; border-bottom: 0.5px solid var(--border); }
-  .project-results th { color: var(--muted); font-family: var(--mono); font-size: 12px; font-weight: normal; }
-  .project-results td:last-child, .project-results th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .image-modal img { max-width: 95vw; max-height: 90vh; background: #fff; }
+  .image-modal button { position: fixed; top: 1rem; right: 1.25rem; font-size: 2rem; line-height: 1; color: #fff; background: none; border: 0; cursor: pointer; }
+
+  /* ---------- Small screens ---------- */
+  @media (max-width: 760px) {
+    .site-nav ul { gap: 0.9rem; }
+    .site-nav ul li.hide-sm { display: none; }
+    .site-nav .name .full { display: none; }
+    .site-nav .name .short { display: inline; }
+    .project { grid-template-columns: 1fr; grid-template-areas: "text" "figure"; }
+    .about { grid-template-columns: 1fr; }
+    .small-builds dl { grid-template-columns: 1fr; gap: 0.25rem; }
+    .small-builds dd { margin-bottom: 0.9rem; }
+  }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="#" class="nav-logo">mb.dev</a>
-  <ul class="nav-links">
-    <li><a href="#projects">projects</a></li>
-    <li><a href="#about">about</a></li>
-    <li><a href="#contact">contact</a></li>
-  </ul>
+<nav class="site-nav" aria-label="Main">
+  <div class="wrap">
+    <a href="#top" class="name"><span class="full">McAllister Blair</span><span class="short" aria-hidden="true">MB</span></a>
+    <ul>
+      <li class="hide-sm"><a href="#now">Now</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Switch color theme">Dark</button>
+  </div>
 </nav>
 
-<div class="hero">
-  <div class="hero-label">open to research assistant &amp; internship roles · ML, robotics, biosignals</div>
-  <h1>McAllister<br><em>Blair</em></h1>
-  <p class="hero-bio">
-    Data Science student at <strong>UC San Diego</strong> (B.S. June 2027), building at the intersection of
-    <strong>machine learning, physical systems, and signal processing</strong>. Currently an
-    <strong>AI engineering intern at ArcellAI</strong>, building biosignal data-quality and validation tooling.
-    I'm interested in robotics, imitation/reinforcement learning, autonomous systems, biosignal processing, and applying data
-    science to real-world problems in human health, neuroscience, and intelligent machines.
-  </p>
-  <div class="hero-links">
-    <a href="#projects" class="btn btn-primary">view my work</a>
-    <a href="https://github.com/macblair221" target="_blank" class="btn btn-ghost">github</a>
-    <a href="https://huggingface.co/macblair221" target="_blank" class="btn btn-ghost">hugging face</a>
-    <a href="https://linkedin.com/in/macblair" target="_blank" class="btn btn-ghost">linkedin</a>
+<header class="hero" id="top">
+  <div class="wrap">
+    <h1>McAllister<br>Blair</h1>
+    <p class="lede">
+      I study data science at UC San Diego and build the parts where software meets the physical world:
+      robot arms trained from demonstrations, an ECG front-end on a breadboard, and the machine learning
+      that has to survive real, messy signals.
+    </p>
+    <div class="links">
+      <a href="#work">See my work</a>
+      <a href="https://github.com/macblair221" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://huggingface.co/macblair221" target="_blank" rel="noopener">Hugging Face</a>
+      <a href="https://linkedin.com/in/macblair" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
   </div>
-  <div class="scroll-indicator">
-    <div class="scroll-line"></div>
-    scroll to explore
+  <div class="trace-strip grid-paper" aria-hidden="true">
+    <svg viewBox="0 0 1200 140" preserveAspectRatio="xMidYMid slice">
+      <path pathLength="1" d="M0,88.0 L6,88.0 L12,88.0 L17.75,87.7 L19,87.4 L19.75,87.1 L20.25,86.9 L20.75,86.5 L21.25,86.2 L21.75,85.8 L22.25,85.4 L22.75,84.9 L23.25,84.4 L23.75,83.9 L24.25,83.4 L24.75,83.0 L25.25,82.6 L25.75,82.3 L26.5,82.1 L28.25,82.3 L28.75,82.6 L29.25,83.0 L29.75,83.4 L30.25,83.9 L30.75,84.4 L31.25,84.9 L31.75,85.4 L32.25,85.8 L32.75,86.2 L33.25,86.5 L33.75,86.9 L34.25,87.1 L35,87.4 L36,87.7 L38.25,87.9 L43,88.4 L43.25,88.7 L43.5,89.3 L43.75,90.0 L44,91.0 L44.25,92.1 L44.5,93.0 L44.75,93.7 L45.5,93.0 L45.75,91.9 L46,90.7 L46.25,89.5 L46.5,88.1 L46.75,86.6 L47,84.5 L47.25,81.6 L47.5,77.6 L47.75,72.1 L48,65.2 L48.25,57.0 L48.5,48.2 L48.75,39.7 L49,32.5 L49.25,27.7 L49.5,26.0 L49.75,27.7 L50,32.5 L50.25,39.7 L50.5,48.3 L50.75,57.2 L51,65.4 L51.25,72.6 L51.5,78.4 L51.75,82.9 L52,86.5 L52.25,89.4 L52.5,92.0 L52.75,94.4 L53,96.7 L53.25,98.8 L53.5,100.5 L53.75,101.6 L54,102.0 L54.25,101.6 L54.5,100.5 L54.75,98.9 L55,97.0 L55.25,95.0 L55.5,93.2 L55.75,91.6 L56,90.4 L56.25,89.5 L56.5,88.9 L56.75,88.5 L57.25,88.1 L63.25,88.0 L69.25,87.7 L70.75,87.5 L71.75,87.2 L72.5,87.0 L73.25,86.6 L74,86.3 L74.5,86.0 L75,85.6 L75.5,85.3 L76,84.9 L76.5,84.4 L77,83.9 L77.25,83.7 L77.5,83.4 L77.75,83.1 L78,82.8 L78.25,82.6 L78.5,82.3 L78.75,82.0 L79,81.6 L79.25,81.3 L79.5,81.0 L79.75,80.7 L80,80.4 L80.25,80.0 L80.5,79.7 L80.75,79.4 L81,79.0 L81.25,78.7 L81.5,78.4 L81.75,78.0 L82,77.7 L82.25,77.4 L82.5,77.1 L82.75,76.8 L83,76.5 L83.25,76.2 L83.5,76.0 L83.75,75.7 L84.25,75.2 L84.75,74.8 L85.25,74.5 L85.75,74.3 L86.75,74.0 L88.25,74.3 L88.75,74.5 L89.25,74.8 L89.75,75.2 L90.25,75.7 L90.5,76.0 L90.75,76.2 L91,76.5 L91.25,76.8 L91.5,77.1 L91.75,77.4 L92,77.7 L92.25,78.0 L92.5,78.4 L92.75,78.7 L93,79.0 L93.25,79.4 L93.5,79.7 L93.75,80.0 L94,80.4 L94.25,80.7 L94.5,81.0 L94.75,81.3 L95,81.6 L95.25,82.0 L95.5,82.3 L95.75,82.6 L96,82.8 L96.25,83.1 L96.5,83.4 L96.75,83.7 L97,83.9 L97.5,84.4 L98,84.9 L98.5,85.3 L99,85.6 L99.5,86.0 L100,86.3 L100.5,86.5 L101.25,86.9 L102,87.1 L103,87.4 L104.5,87.7 L107.75,87.9 L113.75,88.0 L119.75,88.0 L125.75,88.0 L131.75,88.0 L137.75,88.0 L143.75,88.0 L149.75,88.0 L155.75,88.0 L161.75,88.0 L167.75,87.7 L169,87.4 L169.75,87.1 L170.25,86.9 L170.75,86.5 L171.25,86.2 L171.75,85.8 L172.25,85.4 L172.75,84.9 L173.25,84.4 L173.75,83.9 L174.25,83.4 L174.75,83.0 L175.25,82.6 L175.75,82.3 L176.5,82.1 L178.25,82.3 L178.75,82.6 L179.25,83.0 L179.75,83.4 L180.25,83.9 L180.75,84.4 L181.25,84.9 L181.75,85.4 L182.25,85.8 L182.75,86.2 L183.25,86.5 L183.75,86.9 L184.25,87.1 L185,87.4 L186,87.7 L188.25,87.9 L193,88.4 L193.25,88.7 L193.5,89.3 L193.75,90.0 L194,91.0 L194.25,92.1 L194.5,93.0 L194.75,93.7 L195.5,93.0 L195.75,91.9 L196,90.7 L196.25,89.5 L196.5,88.1 L196.75,86.6 L197,84.5 L197.25,81.6 L197.5,77.6 L197.75,72.1 L198,65.2 L198.25,57.0 L198.5,48.2 L198.75,39.7 L199,32.5 L199.25,27.7 L199.5,26.0 L199.75,27.7 L200,32.5 L200.25,39.7 L200.5,48.3 L200.75,57.2 L201,65.4 L201.25,72.6 L201.5,78.4 L201.75,82.9 L202,86.5 L202.25,89.4 L202.5,92.0 L202.75,94.4 L203,96.7 L203.25,98.8 L203.5,100.5 L203.75,101.6 L204,102.0 L204.25,101.6 L204.5,100.5 L204.75,98.9 L205,97.0 L205.25,95.0 L205.5,93.2 L205.75,91.6 L206,90.4 L206.25,89.5 L206.5,88.9 L206.75,88.5 L207.25,88.1 L213.25,88.0 L219.25,87.7 L220.75,87.5 L221.75,87.2 L222.5,87.0 L223.25,86.6 L224,86.3 L224.5,86.0 L225,85.6 L225.5,85.3 L226,84.9 L226.5,84.4 L227,83.9 L227.25,83.7 L227.5,83.4 L227.75,83.1 L228,82.8 L228.25,82.6 L228.5,82.3 L228.75,82.0 L229,81.6 L229.25,81.3 L229.5,81.0 L229.75,80.7 L230,80.4 L230.25,80.0 L230.5,79.7 L230.75,79.4 L231,79.0 L231.25,78.7 L231.5,78.4 L231.75,78.0 L232,77.7 L232.25,77.4 L232.5,77.1 L232.75,76.8 L233,76.5 L233.25,76.2 L233.5,76.0 L233.75,75.7 L234.25,75.2 L234.75,74.8 L235.25,74.5 L235.75,74.3 L236.75,74.0 L238.25,74.3 L238.75,74.5 L239.25,74.8 L239.75,75.2 L240.25,75.7 L240.5,76.0 L240.75,76.2 L241,76.5 L241.25,76.8 L241.5,77.1 L241.75,77.4 L242,77.7 L242.25,78.0 L242.5,78.4 L242.75,78.7 L243,79.0 L243.25,79.4 L243.5,79.7 L243.75,80.0 L244,80.4 L244.25,80.7 L244.5,81.0 L244.75,81.3 L245,81.6 L245.25,82.0 L245.5,82.3 L245.75,82.6 L246,82.8 L246.25,83.1 L246.5,83.4 L246.75,83.7 L247,83.9 L247.5,84.4 L248,84.9 L248.5,85.3 L249,85.6 L249.5,86.0 L250,86.3 L250.5,86.5 L251.25,86.9 L252,87.1 L253,87.4 L254.5,87.7 L257.75,87.9 L263.75,88.0 L269.75,88.0 L275.75,88.0 L281.75,88.0 L287.75,88.0 L293.75,88.0 L299.75,88.0 L305.75,88.0 L311.75,88.0 L317.75,87.7 L319,87.4 L319.75,87.1 L320.25,86.9 L320.75,86.5 L321.25,86.2 L321.75,85.8 L322.25,85.4 L322.75,84.9 L323.25,84.4 L323.75,83.9 L324.25,83.4 L324.75,83.0 L325.25,82.6 L325.75,82.3 L326.5,82.1 L328.25,82.3 L328.75,82.6 L329.25,83.0 L329.75,83.4 L330.25,83.9 L330.75,84.4 L331.25,84.9 L331.75,85.4 L332.25,85.8 L332.75,86.2 L333.25,86.5 L333.75,86.9 L334.25,87.1 L335,87.4 L336,87.7 L338.25,87.9 L343,88.4 L343.25,88.7 L343.5,89.3 L343.75,90.0 L344,91.0 L344.25,92.1 L344.5,93.0 L344.75,93.7 L345.5,93.0 L345.75,91.9 L346,90.7 L346.25,89.5 L346.5,88.1 L346.75,86.6 L347,84.5 L347.25,81.6 L347.5,77.6 L347.75,72.1 L348,65.2 L348.25,57.0 L348.5,48.2 L348.75,39.7 L349,32.5 L349.25,27.7 L349.5,26.0 L349.75,27.7 L350,32.5 L350.25,39.7 L350.5,48.3 L350.75,57.2 L351,65.4 L351.25,72.6 L351.5,78.4 L351.75,82.9 L352,86.5 L352.25,89.4 L352.5,92.0 L352.75,94.4 L353,96.7 L353.25,98.8 L353.5,100.5 L353.75,101.6 L354,102.0 L354.25,101.6 L354.5,100.5 L354.75,98.9 L355,97.0 L355.25,95.0 L355.5,93.2 L355.75,91.6 L356,90.4 L356.25,89.5 L356.5,88.9 L356.75,88.5 L357.25,88.1 L363.25,88.0 L369.25,87.7 L370.75,87.5 L371.75,87.2 L372.5,87.0 L373.25,86.6 L374,86.3 L374.5,86.0 L375,85.6 L375.5,85.3 L376,84.9 L376.5,84.4 L377,83.9 L377.25,83.7 L377.5,83.4 L377.75,83.1 L378,82.8 L378.25,82.6 L378.5,82.3 L378.75,82.0 L379,81.6 L379.25,81.3 L379.5,81.0 L379.75,80.7 L380,80.4 L380.25,80.0 L380.5,79.7 L380.75,79.4 L381,79.0 L381.25,78.7 L381.5,78.4 L381.75,78.0 L382,77.7 L382.25,77.4 L382.5,77.1 L382.75,76.8 L383,76.5 L383.25,76.2 L383.5,76.0 L383.75,75.7 L384.25,75.2 L384.75,74.8 L385.25,74.5 L385.75,74.3 L386.75,74.0 L388.25,74.3 L388.75,74.5 L389.25,74.8 L389.75,75.2 L390.25,75.7 L390.5,76.0 L390.75,76.2 L391,76.5 L391.25,76.8 L391.5,77.1 L391.75,77.4 L392,77.7 L392.25,78.0 L392.5,78.4 L392.75,78.7 L393,79.0 L393.25,79.4 L393.5,79.7 L393.75,80.0 L394,80.4 L394.25,80.7 L394.5,81.0 L394.75,81.3 L395,81.6 L395.25,82.0 L395.5,82.3 L395.75,82.6 L396,82.8 L396.25,83.1 L396.5,83.4 L396.75,83.7 L397,83.9 L397.5,84.4 L398,84.9 L398.5,85.3 L399,85.6 L399.5,86.0 L400,86.3 L400.5,86.5 L401.25,86.9 L402,87.1 L403,87.4 L404.5,87.7 L407.75,87.9 L413.75,88.0 L419.75,88.0 L425.75,88.0 L431.75,88.0 L437.75,88.0 L443.75,88.0 L449.75,88.0 L455.75,88.0 L461.75,88.0 L467.75,87.7 L469,87.4 L469.75,87.1 L470.25,86.9 L470.75,86.5 L471.25,86.2 L471.75,85.8 L472.25,85.4 L472.75,84.9 L473.25,84.4 L473.75,83.9 L474.25,83.4 L474.75,83.0 L475.25,82.6 L475.75,82.3 L476.5,82.1 L478.25,82.3 L478.75,82.6 L479.25,83.0 L479.75,83.4 L480.25,83.9 L480.75,84.4 L481.25,84.9 L481.75,85.4 L482.25,85.8 L482.75,86.2 L483.25,86.5 L483.75,86.9 L484.25,87.1 L485,87.4 L486,87.7 L488.25,87.9 L493,88.4 L493.25,88.7 L493.5,89.3 L493.75,90.0 L494,91.0 L494.25,92.1 L494.5,93.0 L494.75,93.7 L495.5,93.0 L495.75,91.9 L496,90.7 L496.25,89.5 L496.5,88.1 L496.75,86.6 L497,84.5 L497.25,81.6 L497.5,77.6 L497.75,72.1 L498,65.2 L498.25,57.0 L498.5,48.2 L498.75,39.7 L499,32.5 L499.25,27.7 L499.5,26.0 L499.75,27.7 L500,32.5 L500.25,39.7 L500.5,48.3 L500.75,57.2 L501,65.4 L501.25,72.6 L501.5,78.4 L501.75,82.9 L502,86.5 L502.25,89.4 L502.5,92.0 L502.75,94.4 L503,96.7 L503.25,98.8 L503.5,100.5 L503.75,101.6 L504,102.0 L504.25,101.6 L504.5,100.5 L504.75,98.9 L505,97.0 L505.25,95.0 L505.5,93.2 L505.75,91.6 L506,90.4 L506.25,89.5 L506.5,88.9 L506.75,88.5 L507.25,88.1 L513.25,88.0 L519.25,87.7 L520.75,87.5 L521.75,87.2 L522.5,87.0 L523.25,86.6 L524,86.3 L524.5,86.0 L525,85.6 L525.5,85.3 L526,84.9 L526.5,84.4 L527,83.9 L527.25,83.7 L527.5,83.4 L527.75,83.1 L528,82.8 L528.25,82.6 L528.5,82.3 L528.75,82.0 L529,81.6 L529.25,81.3 L529.5,81.0 L529.75,80.7 L530,80.4 L530.25,80.0 L530.5,79.7 L530.75,79.4 L531,79.0 L531.25,78.7 L531.5,78.4 L531.75,78.0 L532,77.7 L532.25,77.4 L532.5,77.1 L532.75,76.8 L533,76.5 L533.25,76.2 L533.5,76.0 L533.75,75.7 L534.25,75.2 L534.75,74.8 L535.25,74.5 L535.75,74.3 L536.75,74.0 L538.25,74.3 L538.75,74.5 L539.25,74.8 L539.75,75.2 L540.25,75.7 L540.5,76.0 L540.75,76.2 L541,76.5 L541.25,76.8 L541.5,77.1 L541.75,77.4 L542,77.7 L542.25,78.0 L542.5,78.4 L542.75,78.7 L543,79.0 L543.25,79.4 L543.5,79.7 L543.75,80.0 L544,80.4 L544.25,80.7 L544.5,81.0 L544.75,81.3 L545,81.6 L545.25,82.0 L545.5,82.3 L545.75,82.6 L546,82.8 L546.25,83.1 L546.5,83.4 L546.75,83.7 L547,83.9 L547.5,84.4 L548,84.9 L548.5,85.3 L549,85.6 L549.5,86.0 L550,86.3 L550.5,86.5 L551.25,86.9 L552,87.1 L553,87.4 L554.5,87.7 L557.75,87.9 L563.75,88.0 L569.75,88.0 L575.75,88.0 L581.75,88.0 L587.75,88.0 L593.75,88.0 L599.75,88.0 L605.75,88.0 L611.75,88.0 L617.75,87.7 L619,87.4 L619.75,87.1 L620.25,86.9 L620.75,86.5 L621.25,86.2 L621.75,85.8 L622.25,85.4 L622.75,84.9 L623.25,84.4 L623.75,83.9 L624.25,83.4 L624.75,83.0 L625.25,82.6 L625.75,82.3 L626.5,82.1 L628.25,82.3 L628.75,82.6 L629.25,83.0 L629.75,83.4 L630.25,83.9 L630.75,84.4 L631.25,84.9 L631.75,85.4 L632.25,85.8 L632.75,86.2 L633.25,86.5 L633.75,86.9 L634.25,87.1 L635,87.4 L636,87.7 L638.25,87.9 L643,88.4 L643.25,88.7 L643.5,89.3 L643.75,90.0 L644,91.0 L644.25,92.1 L644.5,93.0 L644.75,93.7 L645.5,93.0 L645.75,91.9 L646,90.7 L646.25,89.5 L646.5,88.1 L646.75,86.6 L647,84.5 L647.25,81.6 L647.5,77.6 L647.75,72.1 L648,65.2 L648.25,57.0 L648.5,48.2 L648.75,39.7 L649,32.5 L649.25,27.7 L649.5,26.0 L649.75,27.7 L650,32.5 L650.25,39.7 L650.5,48.3 L650.75,57.2 L651,65.4 L651.25,72.6 L651.5,78.4 L651.75,82.9 L652,86.5 L652.25,89.4 L652.5,92.0 L652.75,94.4 L653,96.7 L653.25,98.8 L653.5,100.5 L653.75,101.6 L654,102.0 L654.25,101.6 L654.5,100.5 L654.75,98.9 L655,97.0 L655.25,95.0 L655.5,93.2 L655.75,91.6 L656,90.4 L656.25,89.5 L656.5,88.9 L656.75,88.5 L657.25,88.1 L663.25,88.0 L669.25,87.7 L670.75,87.5 L671.75,87.2 L672.5,87.0 L673.25,86.6 L674,86.3 L674.5,86.0 L675,85.6 L675.5,85.3 L676,84.9 L676.5,84.4 L677,83.9 L677.25,83.7 L677.5,83.4 L677.75,83.1 L678,82.8 L678.25,82.6 L678.5,82.3 L678.75,82.0 L679,81.6 L679.25,81.3 L679.5,81.0 L679.75,80.7 L680,80.4 L680.25,80.0 L680.5,79.7 L680.75,79.4 L681,79.0 L681.25,78.7 L681.5,78.4 L681.75,78.0 L682,77.7 L682.25,77.4 L682.5,77.1 L682.75,76.8 L683,76.5 L683.25,76.2 L683.5,76.0 L683.75,75.7 L684.25,75.2 L684.75,74.8 L685.25,74.5 L685.75,74.3 L686.75,74.0 L688.25,74.3 L688.75,74.5 L689.25,74.8 L689.75,75.2 L690.25,75.7 L690.5,76.0 L690.75,76.2 L691,76.5 L691.25,76.8 L691.5,77.1 L691.75,77.4 L692,77.7 L692.25,78.0 L692.5,78.4 L692.75,78.7 L693,79.0 L693.25,79.4 L693.5,79.7 L693.75,80.0 L694,80.4 L694.25,80.7 L694.5,81.0 L694.75,81.3 L695,81.6 L695.25,82.0 L695.5,82.3 L695.75,82.6 L696,82.8 L696.25,83.1 L696.5,83.4 L696.75,83.7 L697,83.9 L697.5,84.4 L698,84.9 L698.5,85.3 L699,85.6 L699.5,86.0 L700,86.3 L700.5,86.5 L701.25,86.9 L702,87.1 L703,87.4 L704.5,87.7 L707.75,87.9 L713.75,88.0 L719.75,88.0 L725.75,88.0 L731.75,88.0 L737.75,88.0 L743.75,88.0 L749.75,88.0 L755.75,88.0 L761.75,88.0 L767.75,87.7 L769,87.4 L769.75,87.1 L770.25,86.9 L770.75,86.5 L771.25,86.2 L771.75,85.8 L772.25,85.4 L772.75,84.9 L773.25,84.4 L773.75,83.9 L774.25,83.4 L774.75,83.0 L775.25,82.6 L775.75,82.3 L776.5,82.1 L778.25,82.3 L778.75,82.6 L779.25,83.0 L779.75,83.4 L780.25,83.9 L780.75,84.4 L781.25,84.9 L781.75,85.4 L782.25,85.8 L782.75,86.2 L783.25,86.5 L783.75,86.9 L784.25,87.1 L785,87.4 L786,87.7 L788.25,87.9 L793,88.4 L793.25,88.7 L793.5,89.3 L793.75,90.0 L794,91.0 L794.25,92.1 L794.5,93.0 L794.75,93.7 L795.5,93.0 L795.75,91.9 L796,90.7 L796.25,89.5 L796.5,88.1 L796.75,86.6 L797,84.5 L797.25,81.6 L797.5,77.6 L797.75,72.1 L798,65.2 L798.25,57.0 L798.5,48.2 L798.75,39.7 L799,32.5 L799.25,27.7 L799.5,26.0 L799.75,27.7 L800,32.5 L800.25,39.7 L800.5,48.3 L800.75,57.2 L801,65.4 L801.25,72.6 L801.5,78.4 L801.75,82.9 L802,86.5 L802.25,89.4 L802.5,92.0 L802.75,94.4 L803,96.7 L803.25,98.8 L803.5,100.5 L803.75,101.6 L804,102.0 L804.25,101.6 L804.5,100.5 L804.75,98.9 L805,97.0 L805.25,95.0 L805.5,93.2 L805.75,91.6 L806,90.4 L806.25,89.5 L806.5,88.9 L806.75,88.5 L807.25,88.1 L813.25,88.0 L819.25,87.7 L820.75,87.5 L821.75,87.2 L822.5,87.0 L823.25,86.6 L824,86.3 L824.5,86.0 L825,85.6 L825.5,85.3 L826,84.9 L826.5,84.4 L827,83.9 L827.25,83.7 L827.5,83.4 L827.75,83.1 L828,82.8 L828.25,82.6 L828.5,82.3 L828.75,82.0 L829,81.6 L829.25,81.3 L829.5,81.0 L829.75,80.7 L830,80.4 L830.25,80.0 L830.5,79.7 L830.75,79.4 L831,79.0 L831.25,78.7 L831.5,78.4 L831.75,78.0 L832,77.7 L832.25,77.4 L832.5,77.1 L832.75,76.8 L833,76.5 L833.25,76.2 L833.5,76.0 L833.75,75.7 L834.25,75.2 L834.75,74.8 L835.25,74.5 L835.75,74.3 L836.75,74.0 L838.25,74.3 L838.75,74.5 L839.25,74.8 L839.75,75.2 L840.25,75.7 L840.5,76.0 L840.75,76.2 L841,76.5 L841.25,76.8 L841.5,77.1 L841.75,77.4 L842,77.7 L842.25,78.0 L842.5,78.4 L842.75,78.7 L843,79.0 L843.25,79.4 L843.5,79.7 L843.75,80.0 L844,80.4 L844.25,80.7 L844.5,81.0 L844.75,81.3 L845,81.6 L845.25,82.0 L845.5,82.3 L845.75,82.6 L846,82.8 L846.25,83.1 L846.5,83.4 L846.75,83.7 L847,83.9 L847.5,84.4 L848,84.9 L848.5,85.3 L849,85.6 L849.5,86.0 L850,86.3 L850.5,86.5 L851.25,86.9 L852,87.1 L853,87.4 L854.5,87.7 L857.75,87.9 L863.75,88.0 L869.75,88.0 L875.75,88.0 L881.75,88.0 L887.75,88.0 L893.75,88.0 L899.75,88.0 L905.75,88.0 L911.75,88.0 L917.75,87.7 L919,87.4 L919.75,87.1 L920.25,86.9 L920.75,86.5 L921.25,86.2 L921.75,85.8 L922.25,85.4 L922.75,84.9 L923.25,84.4 L923.75,83.9 L924.25,83.4 L924.75,83.0 L925.25,82.6 L925.75,82.3 L926.5,82.1 L928.25,82.3 L928.75,82.6 L929.25,83.0 L929.75,83.4 L930.25,83.9 L930.75,84.4 L931.25,84.9 L931.75,85.4 L932.25,85.8 L932.75,86.2 L933.25,86.5 L933.75,86.9 L934.25,87.1 L935,87.4 L936,87.7 L938.25,87.9 L943,88.4 L943.25,88.7 L943.5,89.3 L943.75,90.0 L944,91.0 L944.25,92.1 L944.5,93.0 L944.75,93.7 L945.5,93.0 L945.75,91.9 L946,90.7 L946.25,89.5 L946.5,88.1 L946.75,86.6 L947,84.5 L947.25,81.6 L947.5,77.6 L947.75,72.1 L948,65.2 L948.25,57.0 L948.5,48.2 L948.75,39.7 L949,32.5 L949.25,27.7 L949.5,26.0 L949.75,27.7 L950,32.5 L950.25,39.7 L950.5,48.3 L950.75,57.2 L951,65.4 L951.25,72.6 L951.5,78.4 L951.75,82.9 L952,86.5 L952.25,89.4 L952.5,92.0 L952.75,94.4 L953,96.7 L953.25,98.8 L953.5,100.5 L953.75,101.6 L954,102.0 L954.25,101.6 L954.5,100.5 L954.75,98.9 L955,97.0 L955.25,95.0 L955.5,93.2 L955.75,91.6 L956,90.4 L956.25,89.5 L956.5,88.9 L956.75,88.5 L957.25,88.1 L963.25,88.0 L969.25,87.7 L970.75,87.5 L971.75,87.2 L972.5,87.0 L973.25,86.6 L974,86.3 L974.5,86.0 L975,85.6 L975.5,85.3 L976,84.9 L976.5,84.4 L977,83.9 L977.25,83.7 L977.5,83.4 L977.75,83.1 L978,82.8 L978.25,82.6 L978.5,82.3 L978.75,82.0 L979,81.6 L979.25,81.3 L979.5,81.0 L979.75,80.7 L980,80.4 L980.25,80.0 L980.5,79.7 L980.75,79.4 L981,79.0 L981.25,78.7 L981.5,78.4 L981.75,78.0 L982,77.7 L982.25,77.4 L982.5,77.1 L982.75,76.8 L983,76.5 L983.25,76.2 L983.5,76.0 L983.75,75.7 L984.25,75.2 L984.75,74.8 L985.25,74.5 L985.75,74.3 L986.75,74.0 L988.25,74.3 L988.75,74.5 L989.25,74.8 L989.75,75.2 L990.25,75.7 L990.5,76.0 L990.75,76.2 L991,76.5 L991.25,76.8 L991.5,77.1 L991.75,77.4 L992,77.7 L992.25,78.0 L992.5,78.4 L992.75,78.7 L993,79.0 L993.25,79.4 L993.5,79.7 L993.75,80.0 L994,80.4 L994.25,80.7 L994.5,81.0 L994.75,81.3 L995,81.6 L995.25,82.0 L995.5,82.3 L995.75,82.6 L996,82.8 L996.25,83.1 L996.5,83.4 L996.75,83.7 L997,83.9 L997.5,84.4 L998,84.9 L998.5,85.3 L999,85.6 L999.5,86.0 L1000,86.3 L1000.5,86.5 L1001.25,86.9 L1002,87.1 L1003,87.4 L1004.5,87.7 L1007.75,87.9 L1013.75,88.0 L1019.75,88.0 L1025.75,88.0 L1031.75,88.0 L1037.75,88.0 L1043.75,88.0 L1049.75,88.0 L1055.75,88.0 L1061.75,88.0 L1067.75,87.7 L1069,87.4 L1069.75,87.1 L1070.25,86.9 L1070.75,86.5 L1071.25,86.2 L1071.75,85.8 L1072.25,85.4 L1072.75,84.9 L1073.25,84.4 L1073.75,83.9 L1074.25,83.4 L1074.75,83.0 L1075.25,82.6 L1075.75,82.3 L1076.5,82.1 L1078.25,82.3 L1078.75,82.6 L1079.25,83.0 L1079.75,83.4 L1080.25,83.9 L1080.75,84.4 L1081.25,84.9 L1081.75,85.4 L1082.25,85.8 L1082.75,86.2 L1083.25,86.5 L1083.75,86.9 L1084.25,87.1 L1085,87.4 L1086,87.7 L1088.25,87.9 L1093,88.4 L1093.25,88.7 L1093.5,89.3 L1093.75,90.0 L1094,91.0 L1094.25,92.1 L1094.5,93.0 L1094.75,93.7 L1095.5,93.0 L1095.75,91.9 L1096,90.7 L1096.25,89.5 L1096.5,88.1 L1096.75,86.6 L1097,84.5 L1097.25,81.6 L1097.5,77.6 L1097.75,72.1 L1098,65.2 L1098.25,57.0 L1098.5,48.2 L1098.75,39.7 L1099,32.5 L1099.25,27.7 L1099.5,26.0 L1099.75,27.7 L1100,32.5 L1100.25,39.7 L1100.5,48.3 L1100.75,57.2 L1101,65.4 L1101.25,72.6 L1101.5,78.4 L1101.75,82.9 L1102,86.5 L1102.25,89.4 L1102.5,92.0 L1102.75,94.4 L1103,96.7 L1103.25,98.8 L1103.5,100.5 L1103.75,101.6 L1104,102.0 L1104.25,101.6 L1104.5,100.5 L1104.75,98.9 L1105,97.0 L1105.25,95.0 L1105.5,93.2 L1105.75,91.6 L1106,90.4 L1106.25,89.5 L1106.5,88.9 L1106.75,88.5 L1107.25,88.1 L1113.25,88.0 L1119.25,87.7 L1120.75,87.5 L1121.75,87.2 L1122.5,87.0 L1123.25,86.6 L1124,86.3 L1124.5,86.0 L1125,85.6 L1125.5,85.3 L1126,84.9 L1126.5,84.4 L1127,83.9 L1127.25,83.7 L1127.5,83.4 L1127.75,83.1 L1128,82.8 L1128.25,82.6 L1128.5,82.3 L1128.75,82.0 L1129,81.6 L1129.25,81.3 L1129.5,81.0 L1129.75,80.7 L1130,80.4 L1130.25,80.0 L1130.5,79.7 L1130.75,79.4 L1131,79.0 L1131.25,78.7 L1131.5,78.4 L1131.75,78.0 L1132,77.7 L1132.25,77.4 L1132.5,77.1 L1132.75,76.8 L1133,76.5 L1133.25,76.2 L1133.5,76.0 L1133.75,75.7 L1134.25,75.2 L1134.75,74.8 L1135.25,74.5 L1135.75,74.3 L1136.75,74.0 L1138.25,74.3 L1138.75,74.5 L1139.25,74.8 L1139.75,75.2 L1140.25,75.7 L1140.5,76.0 L1140.75,76.2 L1141,76.5 L1141.25,76.8 L1141.5,77.1 L1141.75,77.4 L1142,77.7 L1142.25,78.0 L1142.5,78.4 L1142.75,78.7 L1143,79.0 L1143.25,79.4 L1143.5,79.7 L1143.75,80.0 L1144,80.4 L1144.25,80.7 L1144.5,81.0 L1144.75,81.3 L1145,81.6 L1145.25,82.0 L1145.5,82.3 L1145.75,82.6 L1146,82.8 L1146.25,83.1 L1146.5,83.4 L1146.75,83.7 L1147,83.9 L1147.5,84.4 L1148,84.9 L1148.5,85.3 L1149,85.6 L1149.5,86.0 L1150,86.3 L1150.5,86.5 L1151.25,86.9 L1152,87.1 L1153,87.4 L1154.5,87.7 L1157.75,87.9 L1163.75,88.0 L1169.75,88.0 L1175.75,88.0 L1181.75,88.0 L1187.75,88.0 L1193.75,88.0 L1199.75,88.0 L1200,88.0"/>
+    </svg>
   </div>
-</div>
+</header>
 
-<section id="projects">
-  <h2>Things I've built</h2>
+<main>
 
-  <div class="project-card">
-    <div class="project-header">
-      <div class="project-title-block">
-        <h3>6DoF Robot Arm — Imitation Learning</h3>
-        <p>lerobot · so101 · act policy · ps4 teleop · hugging face</p>
-        <div class="tag-row">
-          <span class="tag tag-lime">imitation learning</span>
-          <span class="tag tag-lime">ACT policy</span>
-          <span class="tag tag-green">robotics</span>
-          <span class="tag tag-green">python</span>
-          <span class="tag tag-gray">ubuntu</span>
-          <span class="tag tag-gray">wandb</span>
-          <span class="tag tag-gray">hugging face</span>
-        </div>
+<section id="now">
+  <div class="wrap">
+    <div class="section-head"><h2>Now</h2></div>
+    <ul class="now-list">
+      <li>
+        <h3>AI engineering intern, ArcellAI</h3>
+        <p>Building data-quality and validation tooling, and simulated robotic sample handling with MoveIt.</p>
+      </li>
+      <li>
+        <h3>Triton AI, Jeepbot</h3>
+        <p>Working on obstacle avoidance for the team's autonomous vehicle: local planning, costmaps, and a safety layer on ROS 2.</p>
+      </li>
+      <li>
+        <h3>UC San Diego</h3>
+        <p>B.S. in Data Science, machine learning track, graduating June 2027. Open to research and internship roles.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Work</h2>
+      <div class="filters" role="group" aria-label="Filter projects by topic">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="robotics" aria-pressed="false">Robotics</button>
+        <button type="button" data-filter="biosignals" aria-pressed="false">Biosignals</button>
+        <button type="button" data-filter="ml" aria-pressed="false">Machine learning</button>
       </div>
     </div>
 
-    <div class="project-body">
-      <div>
-        <div class="so101-video">
-          <iframe
-            src="https://www.youtube.com/embed/LyoHkJCaGtY"
-            title="Robot arm demo"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
+    <!-- SO-101 -->
+    <article class="project" data-topics="robotics ml">
+      <figure class="figure">
+        <div class="figure-frame grid-paper">
+          <div class="video-tall">
+            <iframe src="https://www.youtube.com/embed/LyoHkJCaGtY" title="SO-101 arm placing a block into a bowl" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
         </div>
-      </div>
-
-      <div>
-        <p>
-          Built a 6-degree-of-freedom follower robot arm from hardware assembly through deployment of a trained imitation learning policy. The final system autonomously picks up a block and places it into a bowl.
-        </p>
-
-        <ul class="project-highlights">
-          <li>Wrote a custom PS4 teleoperation script for collecting demonstrations</li>
-          <li>Recorded 50+ episodes and trained an ACT policy on the collected trajectories</li>
-          <li>Deployed the trained policy back onto the physical robot and validated it on real hardware</li>
+        <figcaption>The trained ACT policy picking up a block and placing it in a bowl, running on the real arm.</figcaption>
+      </figure>
+      <div class="text">
+        <p class="when">2026</p>
+        <h3>Teaching a robot arm by demonstration</h3>
+        <p class="stack">LeRobot SO-101, ACT policy, PS4 teleoperation, Weights &amp; Biases</p>
+        <p>I built a 6-DoF follower arm from assembly through deployment of a learned policy. It now picks up a block and places it in a bowl on its own.</p>
+        <ul>
+          <li>Wrote a PS4 teleoperation script to record demonstrations</li>
+          <li>Recorded 50+ episodes and trained an Action Chunking Transformer on them</li>
+          <li>Deployed the policy back onto the arm and tested it on real hardware</li>
         </ul>
-
-        <p>
-          This project gave me hands-on experience debugging a full robotics stack across hardware, webcam input, controller mapping, data collection, and model training on Ubuntu.
-        </p>
-      </div>
-    </div>
-
-    <div class="project-metrics">
-      <div class="wandb-container">
-        <div class="wandb-label">
-          <span>ACT policy · training performance</span>
-          <a href="https://wandb.ai/macblair221-uc-san-diego/so101-block-pickup/reports/Lerobot-so-101-follower-training--VmlldzoxNjQzMTUzNQ" target="_blank">
-            open in wandb ↗
-          </a>
+        <p>Training loss fell from 0.35 to 0.06. The dataset (so101_pick_and_place_v3) and model (so101-block-place-final) are on Hugging Face.</p>
+        <div class="more">
+          <a href="https://github.com/macblair221" target="_blank" rel="noopener">Code on GitHub</a>
+          <a href="https://huggingface.co/macblair221" target="_blank" rel="noopener">Model and data on Hugging Face</a>
         </div>
-        <iframe
-          src="https://wandb.ai/macblair221-uc-san-diego/so101-block-pickup/reports/Lerobot-so-101-follower-training--VmlldzoxNjQzMTUzNQ"
-          style="width: 100%; height: 520px; border: none; display: block;"
-          title="WandB Training Report"
-          loading="lazy"
-          allowfullscreen>
-        </iframe>
+        <details class="report">
+          <summary>Show the training report</summary>
+          <iframe data-src="https://wandb.ai/macblair221-uc-san-diego/so101-block-pickup/reports/Lerobot-so-101-follower-training--VmlldzoxNjQzMTUzNQ" title="Weights and Biases training report"></iframe>
+        </details>
       </div>
+    </article>
 
-      <p class="project-caption">
-        Training performance for the ACT policy, trained on recorded teleoperation episodes. Loss decreased from 0.35 to 0.06.
-        The final dataset and model used for training and evaluation are listed on my HuggingFace profile: so101-block-place-final (model)
-        and so101_pick_and_place_v3 (dataset)
-      </p>
-    </div>
-
-    <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
-      <a href="https://github.com/macblair221" target="_blank" class="btn btn-ghost">view code on github</a>
-      <a href="https://huggingface.co/macblair221" target="_blank" class="btn btn-ghost">datasets on hugging face</a>
-    </div>
-  </div>
-
-  <div class="project-card">
-    <div class="project-header">
-      <div class="project-title-block">
-        <h3>Autonomous RC Car — DSC 190</h3>
-        <p>UC San Diego · behavioral cloning · raspberry pi 5 · dsmlp gpu cluster · deep learning</p>
-        <div class="tag-row">
-          <span class="tag tag-amber">in progress</span>
-          <span class="tag tag-lime">behavioral cloning</span>
-          <span class="tag tag-lime">deep learning</span>
-          <span class="tag tag-green">robotics</span>
-          <span class="tag tag-gray">python</span>
-          <span class="tag tag-gray">raspberry pi</span>
+    <!-- Parkinson's -->
+    <article class="project" data-topics="biosignals ml">
+      <figure class="figure">
+        <div class="figure-frame">
+          <table class="results">
+            <thead><tr><th scope="col">How it was evaluated</th><th scope="col">ROC-AUC</th></tr></thead>
+            <tbody>
+              <tr><td>Random split (leaks subject identity)</td><td>0.796</td></tr>
+              <tr><td>Leave one subject out, 15 subjects</td><td>0.583</td></tr>
+              <tr class="key"><td>Leave one subject out, 13 subjects</td><td>0.578</td></tr>
+              <tr><td>Shuffled labels, 100 permutations</td><td>0.500</td></tr>
+            </tbody>
+          </table>
         </div>
-      </div>
-    </div>
-
-    <div class="project-body">
-      <div>
-        <div class="so101-video">
-          <iframe
-            src="https://www.youtube.com/embed/-TeuYBSztGQ"
-            title="DSC 190 autonomous car demo"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-
-      <div>
-        <p>
-          Hands-on autonomous vehicles course: building, training, and deploying a full autonomy stack on a physical RC car platform, from data collection through on-vehicle inference.
-        </p>
-
-        <ul class="project-highlights">
-          <li>Deployed and iterated a full end-to-end behavioral cloning pipeline (DonkeyCar) — driving data collection, model training, and autonomous laps on real hardware</li>
-          <li>Ran training workflows on UCSD's DSMLP GPU cluster and deployed trained models to a Raspberry Pi 5 onboard the vehicle</li>
-          <li>Debugged the full hardware/software stack: camera input, actuation, calibration, and the train-deploy loop between the cluster and the car</li>
+        <figcaption>Same features, same model. Only the way the data was split changes.</figcaption>
+      </figure>
+      <div class="text">
+        <p class="when">2026</p>
+        <h3>Parkinson's medication state from EEG, and why the first answer was wrong</h3>
+        <p class="stack">MNE-BIDS, scikit-learn, random forest, permutation testing</p>
+        <p>A classifier that tells whether a Parkinson's patient is on or off levodopa from resting EEG. The first pipeline scored 0.796, but its random split let the model recognize individual patients. Rebuilt with leave-one-subject-out testing, it holds at 0.578 on patients it has never seen, above a permutation null.</p>
+        <ul>
+          <li>Processed raw clinical recordings from OpenNeuro into 48 features across 7 sensorimotor channels</li>
+          <li>Switched to relative band power and a normalized coupling index, closing two ways recording gain leaked into the label</li>
+          <li>Traced the two best-scoring subjects to a preprocessing mismatch flagged in the dataset's own metadata</li>
+          <li>Tested against 100 shuffled-label runs (0.500 ± 0.012, p = 0.0099)</li>
         </ul>
-
-        <p>
-          Full write-up, code, and results will be posted here at the end of the course.
-        </p>
-      </div>
-    </div>
-
-    <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
-      <a href="https://github.com/macblair221" target="_blank" class="btn btn-ghost">follow progress on github</a>
-    </div>
-  </div>
-
-  <div class="project-card">
-    <div class="project-header">
-      <div class="project-title-block">
-        <h3>ECG Analog Front-End + Analysis Pipeline</h3>
-        <p>AD620 instrumentation amp · arduino · python · mne-python · scipy</p>
-        <div class="tag-row">
-          <span class="tag tag-lime">biosignals</span>
-          <span class="tag tag-green">data pipeline</span>
-          <span class="tag tag-gray">signal processing</span>
-          <span class="tag tag-gray">hardware</span>
+        <div class="more">
+          <a href="https://github.com/macblair221/parkinsons-eeg-classifier" target="_blank" rel="noopener">Code on GitHub</a>
         </div>
       </div>
-    </div>
+    </article>
 
-    <div class="project-body">
-      <div>
-        <button
-          class="project-image-button"
-          type="button"
-          onclick="openImageModal('images/ecg_peak_detection_results.png', 'Automated peak detection calculating BPM from a filtered ECG signal')"
-          aria-label="Click to enlarge peak detection results"
-        >
-          <img
-            src="images/ecg_peak_detection_results.png"
-            alt="Automated peak detection algorithm calculating beats per minute from a filtered human ECG signal"
-            class="project-image"
-          >
-        </button>
-        <p class="project-image-caption">Automated R-peak detection on live ECG (click to enlarge)</p>
-        <button
-          class="project-image-button"
-          type="button"
-          onclick="openImageModal('images/real_circuit_build.jpg', 'Breadboard circuit build')"
-          aria-label="Click to enlarge breadboard circuit"
-          style="margin-top: 1rem;"
-        >
-          <img
-            src="images/real_circuit_build.jpg"
-            alt="Breadboard circuit using an AD620 instrumentation amplifier and analog components to filter and amplify biosignals"
-            class="project-image"
-          >
-        </button>
-        <p class="project-image-caption">AD620-based analog front-end (click to enlarge)</p>
-      </div>
-
-      <div>
-        <p>
-          Built a complete, end-to-end hardware and software pipeline to capture, digitally filter, and analyze live human biometrics using off-the-shelf components and Python. The front-end was designed with EEG acquisition as the long-term goal and was first validated on ECG, where the stronger, well-characterized signal made it possible to verify the full analog and digital chain.
-        </p>
-
-        <ul class="project-highlights">
-          <li><strong>Analog Hardware:</strong> Designed and built a physical amplifier circuit on a breadboard to extract microscopic biological signals while filtering out ambient electrical noise.</li>
-          <li><strong>Digital Telemetry:</strong> Engineered a safe hardware bridge to an Arduino, capturing real-time physiological data at a ~190Hz effective sampling rate.</li>
-          <li><strong>Data Pipeline:</strong> Developed a custom Python script using PySerial to ingest the live hardware data stream directly into a standard data science environment.</li>
-          <li><strong>Signal Processing:</strong> Applied clinical-grade digital bandpass filters (MNE-Python) to remove baseline wander and residual interference from the raw data.</li>
-          <li><strong>Algorithmic Validation:</strong> Wrote an automated peak-detection algorithm (SciPy) with a strict voltage floor to accurately isolate heartbeats and calculate a live resting heart rate.</li>
+    <!-- ECG -->
+    <article class="project" data-topics="biosignals">
+      <figure class="figure">
+        <div class="figure-frame grid-paper">
+          <button class="zoom" type="button" data-full="images/ecg_peak_detection_results.png" aria-label="Enlarge the peak detection plot">
+            <img src="images/ecg_peak_detection_results.png" alt="Filtered ECG signal with detected heartbeats marked and beats per minute calculated" loading="lazy">
+          </button>
+          <button class="zoom" type="button" data-full="images/real_circuit_build.jpg" aria-label="Enlarge the breadboard photo">
+            <img src="images/real_circuit_build.jpg" alt="Breadboard circuit built around an AD620 instrumentation amplifier" loading="lazy">
+          </button>
+        </div>
+        <figcaption>Detected heartbeats on a live recording, and the AD620 front-end that captured it. Click either to enlarge.</figcaption>
+      </figure>
+      <div class="text">
+        <p class="when">2026</p>
+        <h3>An ECG front-end from off-the-shelf parts</h3>
+        <p class="stack">AD620 instrumentation amp, Arduino, PySerial, MNE-Python, SciPy</p>
+        <p>A full pipeline that captures, filters, and analyzes a live heartbeat. I designed it with EEG as the end goal and validated it on ECG first, because the stronger signal makes it possible to check every stage.</p>
+        <ul>
+          <li>Built an amplifier circuit that pulls a tiny biological signal out of electrical noise</li>
+          <li>Streamed it through an Arduino at about 190 Hz into Python</li>
+          <li>Removed baseline wander and interference with band-pass filtering</li>
+          <li>Wrote peak detection with a voltage floor to find each heartbeat and compute heart rate</li>
         </ul>
-      </div>
-    </div>
-
-    <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
-      <a href="https://github.com/macblair221/eeg-signal-acquisition" target="_blank" class="btn btn-ghost">
-        View GitHub Repo →
-      </a>
-    </div>
-  </div>
-
-  <div class="project-card">
-    <div class="project-header">
-      <div class="project-title-block">
-        <h3>Parkinson's Neurological State Classifier</h3>
-        <p>MNE-BIDS · random forest · permutation testing · signal processing</p>
-        <div class="tag-row">
-          <span class="tag tag-lime">machine learning</span>
-          <span class="tag tag-green">eeg biomarkers</span>
-          <span class="tag tag-gray">python</span>
-          <span class="tag tag-gray">scikit-learn</span>
+        <div class="more">
+          <a href="https://github.com/macblair221/eeg-signal-acquisition" target="_blank" rel="noopener">Code on GitHub</a>
         </div>
       </div>
-    </div>
+    </article>
 
-    <div class="project-body">
-      <div>
-        <table class="project-results">
-          <tr><th>Evaluation</th><th>ROC-AUC</th></tr>
-          <tr><td>Pooled random split <em>(leaks)</em></td><td>0.796</td></tr>
-          <tr><td>Leave-one-subject-out, 15 subjects</td><td>0.583</td></tr>
-          <tr><td>Leave-one-subject-out, 13 subjects</td><td><strong>0.578</strong></td></tr>
-          <tr><td>Shuffled-label null (100 perms)</td><td>0.500</td></tr>
-        </table>
-        <p class="project-image-caption">Same features, same model — only the split differs.</p>
-      </div>
-      <div>
-        <p>
-           A cross-subject EEG decoder for Parkinson's medication state — and an investigation into why its first result was wrong. The original pipeline reported 0.796 ROC-AUC from a random train/test split that leaked subject identity. Rebuilt with leave-one-subject-out evaluation and confound-resistant features, it holds at 0.578 across held-out patients, validated against a permutation null
-        </p>
-
-        <ul class="project-highlights">
-          <li>Ingested, filtered, and epoched raw clinical BDF datasets from OpenNeuro using MNE-BIDS, extracting 48 features across 7 sensorimotor channels.</li>
-          <li>Replaced absolute band power with relative power and normalized the PAC modulation index, closing two routes by which per-session recording gain — confounded with the ON/OFF label — leaked into the classifier.</li>
-          <li>Found that the two highest-scoring subjects were the only two flagged in the dataset metadata for a preprocessing mismatch between sessions; excluding them improved 8 of the remaining 13.</li>
-          <li>Validated against a 100-permutation shuffled-label null (0.500 ± 0.012, p = 0.0099).</li>
+    <!-- RC car -->
+    <article class="project" data-topics="robotics ml">
+      <figure class="figure">
+        <div class="figure-frame grid-paper">
+          <div class="video-tall">
+            <iframe src="https://www.youtube.com/embed/-TeuYBSztGQ" title="Autonomous RC car driving laps" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <figcaption>The car driving itself on a model trained from my own driving.</figcaption>
+      </figure>
+      <div class="text">
+        <p class="when">Summer 2026, DSC 190</p>
+        <h3>A self-driving RC car</h3>
+        <p class="stack">DonkeyCar, behavioral cloning, Raspberry Pi 5, UCSD DSMLP GPU cluster</p>
+        <p>In UCSD's autonomous vehicles course I built and deployed an end-to-end autonomy stack on a physical car, from collecting driving data to running the model on board.</p>
+        <ul>
+          <li>Ran the full behavioral cloning loop: drive, record, train, and lap autonomously</li>
+          <li>Trained on the DSMLP GPU cluster and deployed to a Raspberry Pi 5 on the car</li>
+          <li>Debugged camera input, actuation, calibration, and the train-deploy loop</li>
         </ul>
+        <div class="more">
+          <a href="https://github.com/macblair221" target="_blank" rel="noopener">GitHub</a>
+        </div>
       </div>
-    </div>
+    </article>
 
-    <div class="project-footer" style="padding: 1.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap;">
-      <a href="https://github.com/macblair221/parkinsons-eeg-classifier" target="_blank" class="btn btn-primary">
-        view code on github →
-      </a>
+    <div class="small-builds" data-topics="robotics ml">
+      <h3>Smaller builds</h3>
+      <dl>
+        <dt>Emergency braking node</dt>
+        <dd>A C++ ROS 2 safety node that reads LiDAR and odometry, computes time to collision, and stops the vehicle before impact. Tested against a synthetic sensor fixture.</dd>
+        <dt>Honesty probe</dt>
+        <dd>A linear probe on Qwen2.5-0.5B's hidden states that tries to tell honest answers from lies.</dd>
+      </dl>
     </div>
   </div>
-
 </section>
 
 <section id="about">
-  <div class="section-label">background</div>
-  <h2>About me</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>
-        I'm a <strong>Data Science student at UC San Diego</strong> (B.S. expected June 2027) with a strong
-        foundation in machine learning and statistics. Over the past year, I've been expanding beyond traditional
-        data science coursework by building physical systems, from robotics and imitation learning to
-        low-cost biosignal hardware. This summer I'm an <strong>AI engineering intern at ArcellAI</strong>,
-        where I'm building a biosignal data viewer and quality-control validation pipeline for
-        clinical EEG/polysomnography data (MNE-Python, fail-fast QC gating, Pydantic schemas).
-      </p>
-
-      <p>
-        I recently built a 6-DoF robot arm from scratch, teaching myself hardware assembly,
-        teleoperation, and training an Action Chunking Transformer policy. I've also developed
-        an analog front-end for biosignal acquisition, and I'm currently taking UCSD's Autonomous
-        Vehicles course (DSC 190), training and deploying deep learning autonomy pipelines on a
-        physical RC car.
-      </p>
-
-      <p>
-        My long-term goal is to build intelligent systems that meaningfully improve human life,
-        whether through assistive robotics, neuroscience tools, or other real-world applications of
-        machine learning and signal processing. The common idea is using data and intelligent
-        systems in ways that are practical and beneficial to people.
-      </p>
-
-      <p>
-        For the <strong>2026–27 academic year</strong>, I'm seeking <strong>undergraduate research
-        assistant and internship roles</strong> in machine learning, robotics, or biosignal processing.
-        Longer term, I'm excited to keep applying these skills to neuroscience, neurotech, and
-        autonomous systems.
-      </p>
-    </div>
+  <div class="wrap about">
     <div>
-      <ul class="interests-list">
-        <li><span class="interest-dot dot-lime"></span> Robotics, Imitation Learning &amp; Autonomous Systems</li>
-        <li><span class="interest-dot dot-lime"></span> Embodied AI &amp; Physical ML Systems</li>
-        <li><span class="interest-dot dot-green"></span> Biosignal Processing &amp; EEG</li>
-        <li><span class="interest-dot dot-green"></span> Neuroscience &amp; Human Cognitive Health</li>
-        <li><span class="interest-dot dot-lime"></span> Building hardware + software from scratch</li>
-      </ul>
-      <div style="margin-top: 2rem; padding: 1.5rem; background: var(--surface); border: 0.5px solid var(--border); border-radius: 6px;">
-        <p style="font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem;">currently</p>
-        <p style="font-size: 0.9rem; color: #b0ada6; line-height: 1.75;">
-          Data Science major at UCSD, B.S. June 2027 ·
-          AI engineering intern at ArcellAI (biosignal QC tooling) ·
-          Building an autonomous RC car in DSC 190 ·
-          Open to research assistant &amp; internship roles for 2026–27
-        </p>
-      </div>
+      <h2 style="margin-bottom: 2rem;">About</h2>
+      <p>I'm a data science student at UC San Diego, graduating in June 2027. Over the past year I've pushed past coursework into building physical systems: a robot arm trained by imitation learning, low-cost biosignal hardware, and autonomy on a real car.</p>
+      <p>At ArcellAI I've built quality-control tooling for clinical EEG and sleep data, and I'm now working on simulated robotic sample handling. I care most about results that hold up: a model that still works on a patient it hasn't seen, or a robot that can prove it finished the job.</p>
+      <p>Long term, I want to build intelligent systems that help people, through assistive robotics, neuroscience tools, or autonomous machines.</p>
+    </div>
+    <ul class="interests" aria-label="Interests">
+      <li>Robotics and imitation learning</li>
+      <li>Autonomous systems</li>
+      <li>Biosignal processing and EEG</li>
+      <li>Neuroscience and neurotech</li>
+      <li>Building hardware and software from scratch</li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <h2 style="margin-bottom: 1.25rem;">Get in touch</h2>
+    <p>I'm open to research assistant and internship roles in machine learning, robotics, and biosignal processing, and always happy to talk about any of it.</p>
+    <div class="links">
+      <a href="mailto:macblair221@gmail.com">macblair221@gmail.com</a>
+      <a href="https://github.com/macblair221" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/macblair" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://huggingface.co/macblair221" target="_blank" rel="noopener">Hugging Face</a>
     </div>
   </div>
 </section>
 
-<div class="contact-strip" id="contact">
-  <div class="contact-inner">
-    <div class="contact-text">
-      <h2>Let's connect</h2>
-      <p>Open to research roles, collaborations, and conversations about robotics, machine learning, neuroscience, and autonomous systems.</p>
-    </div>
-    <div class="contact-links">
-      <a href="https://github.com/macblair221" target="_blank" class="btn btn-primary">github</a>
-      <a href="https://huggingface.co/macblair221" target="_blank" class="btn btn-ghost">hugging face</a>
-      <a href="https://linkedin.com/in/macblair" target="_blank" class="btn btn-ghost">linkedin</a>
-    </div>
-  </div>
-</div>
+</main>
 
 <footer>
-  <p>McAllister blair · ucsd data science · macblair221@gmail.com</p>
+  <div class="wrap">McAllister Blair, UC San Diego</div>
 </footer>
 
-<div id="image-modal" class="image-modal" onclick="closeImageModal()" aria-hidden="true" role="dialog" aria-modal="true">
-  <button class="image-modal-close" type="button" onclick="closeImageModal(event)" aria-label="Close enlarged image">
-    ×
-  </button>
-  <img id="modal-image" src="" alt="" class="image-modal-img" onclick="event.stopPropagation()">
+<div class="image-modal" id="image-modal" role="dialog" aria-modal="true" aria-label="Enlarged image" hidden>
+  <button type="button" aria-label="Close">×</button>
+  <img alt="">
 </div>
 
 <script>
-  function openImageModal(src, alt) {
-    const modal = document.getElementById("image-modal");
-    const image = document.getElementById("modal-image");
-
-    image.src = src;
-    image.alt = alt;
-    modal.classList.add("open");
-    modal.setAttribute("aria-hidden", "false");
-
-    const closeButton = modal.querySelector(".image-modal-close");
-    if (closeButton) closeButton.focus();
-  }
-
-  function closeImageModal(event) {
-    if (event) event.stopPropagation();
-
-    const modal = document.getElementById("image-modal");
-    const image = document.getElementById("modal-image");
-
-    modal.classList.remove("open");
-    modal.setAttribute("aria-hidden", "true");
-    image.src = "";
-    image.alt = "";
-  }
-
-  document.addEventListener("keydown", function(event) {
-    if (event.key === "Escape") {
-      closeImageModal();
+  // Theme toggle: remembers your choice; otherwise follows the system setting.
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById("theme-toggle");
+    function current() {
+      if (root.dataset.theme) return root.dataset.theme;
+      return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
-  });
-</script>
+    function label() { btn.textContent = current() === "dark" ? "Light" : "Dark"; }
+    btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.dataset.theme = next;
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      label();
+    });
+    label();
+  })();
 
+  // Project filters.
+  (function () {
+    var buttons = document.querySelectorAll(".filters button");
+    var items = document.querySelectorAll("#work [data-topics]");
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var f = b.dataset.filter;
+        buttons.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        items.forEach(function (el) {
+          el.hidden = !(f === "all" || el.dataset.topics.split(" ").indexOf(f) !== -1);
+        });
+      });
+    });
+  })();
+
+  // Load the W&B report only when it's opened (it's heavy).
+  document.querySelectorAll("details.report").forEach(function (d) {
+    d.addEventListener("toggle", function () {
+      var f = d.querySelector("iframe");
+      if (d.open && !f.src) f.src = f.dataset.src;
+    });
+  });
+
+  // Highlight the nav link for the section in view.
+  (function () {
+    var links = {};
+    document.querySelectorAll(".site-nav ul a").forEach(function (a) { links[a.getAttribute("href").slice(1)] = a; });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && links[e.target.id]) {
+          Object.values(links).forEach(function (a) { a.removeAttribute("aria-current"); });
+          links[e.target.id].setAttribute("aria-current", "true");
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    document.querySelectorAll("main section[id]").forEach(function (s) { obs.observe(s); });
+  })();
+
+  // Image viewer.
+  (function () {
+    var modal = document.getElementById("image-modal");
+    var img = modal.querySelector("img");
+    var closeBtn = modal.querySelector("button");
+    var opener = null;
+    function close() { modal.classList.remove("open"); modal.hidden = true; img.src = ""; if (opener) opener.focus(); }
+    document.querySelectorAll(".zoom").forEach(function (z) {
+      z.addEventListener("click", function () {
+        opener = z;
+        img.src = z.dataset.full;
+        img.alt = z.querySelector("img").alt;
+        modal.hidden = false; modal.classList.add("open"); closeBtn.focus();
+      });
+    });
+    modal.addEventListener("click", function (e) { if (e.target !== img) close(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && modal.classList.contains("open")) close(); });
+  })();
+</script>
 </body>
 </html>
